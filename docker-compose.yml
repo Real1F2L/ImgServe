@@ -1,0 +1,11 @@
+version: '3'
+services:
+  imgserve:
+    build: ./
+    restart: unless-stopped
+    container_name: ImgServe
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/app/
+      - /path/to/folder-you-want-to-share/:/Files/

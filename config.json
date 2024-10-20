@@ -1,0 +1,19 @@
+{
+    "RootLocation": "./Files/",
+    "CacheLocation": "./Cache/",
+    "DoClearCache": true,
+    "DoClearVideoCache": false,
+    "ClearCacheHrs": 24,
+    "DoVideoResizing": true,
+    "VideoScaleX": 854,
+    "VideoScaleY": 480,
+    "VideoBitrate": "500K",
+    "DontShareNames": [
+        "Dockerfile",
+        ".gitignore",
+        ".venv",
+        ".pyCache",
+        "__pycache__",
+        ".git"
+    ]
+}
