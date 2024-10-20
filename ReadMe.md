@@ -31,7 +31,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
   - [Windows](#Installation-on-windows)
   - [Linux](#Installation-on-Linux)
   - [Docker](#Installation-In-Docker)
-    - [Docker-compose.yml](#Using-dockercompose.yml)
+    - [docker-compose.yml](#using-docker-compose)
     - [Docker command](#Using-Docker-Command)
 - [Usage](#usage)
 - [License](#license)
@@ -71,7 +71,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 ## Installation In Docker
 
-### Using dockercompose.yml
+### Using Docker Compose
 
 1. Clone the repository:
   ```bash
