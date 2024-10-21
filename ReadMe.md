@@ -42,7 +42,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git ImgServe
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 2. Edit config.json
@@ -52,7 +52,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git ImgServe
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 2. Create a new virtual environment (optional):
@@ -75,7 +75,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git ImgServe
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 3. Edit the the docker-compose.yml
@@ -89,7 +89,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git ImgServe
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 
