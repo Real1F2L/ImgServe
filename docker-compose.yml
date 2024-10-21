@@ -8,5 +8,5 @@ services:
       - "8080:80"
     volumes:
       - ./:/app/
-      - /path/to/folder-you-want-to-share/:/Files/
+      - /path/to/folder-you-want-to-share/:/app/Files/
       - ./config.json:/app/config.json
