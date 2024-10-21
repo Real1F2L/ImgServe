@@ -105,6 +105,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
    -p 8080:80 \
    -v ./:/app/ \         # Mount current directory to /app
    -v ./Files/:/Files/   # Folder containing the files you want to share
+   -v ./config.json:/app/config.json # Mount config file so it live updates
    imgserve:1.0.0
  ```
  

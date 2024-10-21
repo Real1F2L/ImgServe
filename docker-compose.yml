@@ -9,3 +9,4 @@ services:
     volumes:
       - ./:/app/
       - /path/to/folder-you-want-to-share/:/Files/
+      - ./config.json:/app/config.json
