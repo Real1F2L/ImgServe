@@ -178,7 +178,7 @@ async def downloadFile(request:Request):
         if (not requestQuery): raise HTTPException(status_code=400, detail="Missing query")
 
         _file = os.path.join(utils._root, unquote(requestQuery.get("file", ""))) #? The location of the file to return
-        _imgSize = int(unquote(requestQuery.get("size", 64))) #? the image size, default 64
+        _imgSize = int(unquote(requestQuery.get("size", "64"))) #? the image size, default 64
         _extensionWithoutDot = os.path.splitext(_file)[1].split(".")[1].lower() #? the file extension
         _basename = os.path.basename(_file) #? the entire name of the file (including extension)
         _CacheSavePath = os.path.join(utils._CacheLocation, _basename + "_resized" + unquote(requestQuery.get("size", "64")) + ".webp") #? where the image will be stored in the cache
