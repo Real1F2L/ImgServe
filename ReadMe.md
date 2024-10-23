@@ -24,7 +24,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 ![Size 128](https://shareapi.gegeha.com/download?size=128&file=images/index/chopper/1.png)
 ![Size 256](https://shareapi.gegeha.com/download?size=256&file=images/index/chopper/1.png)
 
-#### each of these images are from the same website, using the same image!
+#### Each of these images are from the same [website](https://www.gegeha.com), using the same image!
 
 ## Table of How-To-Install 
 - [Installation](#Installation)
@@ -42,7 +42,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 2. Edit config.json
@@ -52,7 +52,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 2. Create a new virtual environment (optional):
@@ -75,7 +75,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 3. Edit the the docker-compose.yml
@@ -89,7 +89,7 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 
 1. Clone the repository:
   ```bash
-  git clone https://github.com/yourusername/ImgServe.git
+  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
   cd ImgServe
   ```
 
@@ -112,6 +112,17 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 ## Usage
 1. Install latest version of [Python](https://www.python.org/downloads/)
 2. Follow the instructions at [Installation](#Installation)
+3. ImgServe is an API that is entirely operated by URL query
+  - For example: `[Your IP Address]:[Your Port]/searchFiles?folder=Projects/` will return all the files inside of "Projects/"
+    
+  - There are multiple subdirectories you can call from:
+     - `/searchFiles` Returns JSON describing all the files inside a directory
+     - `/get-file-contents` Returns a PlainTextResponse that contains the inside of a text file
+     - `/download` Returns a file (Used for requesting images)
+     - `/display-video` Returns a StreamingResponse (Used for playing resized videos)
+     - And more to come...
+   
+  - There will soon be a deeper visual How-To on my [website](https://www.gegeha.com)
 
 ## License
 - You may:
