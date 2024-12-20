@@ -9,4 +9,4 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # run script
-CMD ["python", "Scripts/__init__.py"]
+CMD ["python", "-u", "Scripts/__init__.py"]
