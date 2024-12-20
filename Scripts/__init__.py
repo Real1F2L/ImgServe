@@ -201,7 +201,7 @@ async def downloadFile(request:Request):
             raise HTTPException(status_code=400, detail="Path is a folder")
         
         else:
-            img_files = ["png", "jpg", "jpeg", "webp", "svg", "heic", "pdn"]
+            img_files = ["png", "jpg", "jpeg", "webp", "heic", "pdn"]
 
             # check if the file is an image
             if (_extensionWithoutDot in img_files):
