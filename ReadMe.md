@@ -10,19 +10,19 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 - Resize and change bitrate for videos
 - Switch to modern format webp
 - Store edited images for future use
-
+ 
 ## Examples of Resizing
-![Size 64](https://shareapi.gegeha.com/download?size=64&file=images/index/chopper/3.png)
-![Size 128](https://shareapi.gegeha.com/download?size=128&file=images/index/chopper/3.png)
-![Size 256](https://shareapi.gegeha.com/download?size=256&file=images/index/chopper/3.png)
+![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/3.png)
+![Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/3.png)
+![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/3.png)
 
-![Size 64](https://shareapi.gegeha.com/download?size=64&file=images/index/chopper/2.png)
-![Size 128Size 128](https://shareapi.gegeha.com/download?size=128&file=images/index/chopper/2.png)
-![Size 256](https://shareapi.gegeha.com/download?size=256&file=images/index/chopper/2.png)
+![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/2.png)
+![Size 128Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/2.png)
+![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/2.png)
 
-![Size 64](https://shareapi.gegeha.com/download?size=64&file=images/index/chopper/1.png)
-![Size 128](https://shareapi.gegeha.com/download?size=128&file=images/index/chopper/1.png)
-![Size 256](https://shareapi.gegeha.com/download?size=256&file=images/index/chopper/1.png)
+![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/1.png)
+![Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/1.png)
+![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/1.png)
 
 #### Each of these images are from the same [website](https://www.gegeha.com), using the same image!
 
