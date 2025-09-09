@@ -1,12 +1,71 @@
-node_modules/
-__pycache__/
-.env
-.venv
-*.log
-*.env
-*.bak
-.vscode/
-.idea/
-dist/
+# This specific repo
+Files/
+config.json
+
+# OS Garbage
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# General
 build/
 out/
+dist/
+bin/
+cache/
+*.bak
+
+# Compiled versions
+*.exe
+*.jar
+
+# IDE
+.vscode
+.vscode-test/
+.idea
+
+# Logs
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+.venv
+.env
+*.env
+
+
+
+# Java
+*.class
+*.war
+*.ear
+*.iml
+*.ipr
+*.iws
+target/
+
+# C
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.out
+
+# Compressed
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
