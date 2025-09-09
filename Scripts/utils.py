@@ -13,7 +13,7 @@ if __name__ == "__main__":
 from Scripts.Color import Color
 
 WORKINGDIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-configPath: Path = Path("/ImgServe") / "config.json"
+configPath: Path = WORKINGDIR / "config.json"
 OS = platform.system()
 fastAPI:FastAPI = FastAPI()
 
