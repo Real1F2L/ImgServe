@@ -3,9 +3,9 @@
     "ServerURL": "example.com",
     "ServerVersion": "v1.1.0",
 
-    "fileLocation": "/ImgServe/Files",
-    "cacheLocation": "/ImgServe/Cache",
-    "logLocation": "/ImgServe/Logs",
+    "fileLocation": "/app/Files",
+    "cacheLocation": "/app/Cache",
+    "logLocation": "/app/Logs",
 
     "doClearCache": true,
     "clearCacheEveryHours": 24,

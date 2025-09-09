@@ -1,0 +1,15 @@
+Cache/
+Logs/
+
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+env/
+.venv
+
+.git
+.vscode
+.vscode-test/
+.idea

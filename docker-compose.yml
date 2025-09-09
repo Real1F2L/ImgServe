@@ -7,5 +7,5 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./:/ImgServe
-      - /path/to/folder-you-want-to-share/:/ImgServe/Files/
+      - ./:/app
+      - /path/to/folder-you-want-to-share/:/app/Files
