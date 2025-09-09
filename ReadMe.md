@@ -26,13 +26,8 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 #### All of these images are from the same file, resized to whatever I like it to be!
 
 ## Table of How-To-Install 
-- [ImgServe](#imgserve)
-  - [Features](#features)
-  - [Examples of Resizing](#examples-of-resizing)
-      - [All of these images are from the same file, resized to whatever I like it to be!](#all-of-these-images-are-from-the-same-file-resized-to-whatever-i-like-it-to-be)
-  - [Table of How-To-Install](#table-of-how-to-install)
 - [Installation](#installation)
-    - [Installation on Linux](#installation-on-linux)
+  - [Installation on Linux](#installation-on-linux)
   - [Installation In Docker](#installation-in-docker)
     - [Using Docker Compose](#using-docker-compose)
     - [Using Docker Command](#using-docker-command)
