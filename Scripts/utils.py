@@ -20,6 +20,7 @@ fastAPI:FastAPI = FastAPI()
 videoExtentions = ["mp4", "m4a", "mov", "flv", "mkv", "ts", "gif"]
 imageExtentions = ["png", "jpeg", "webp", "svg", "heic"] # Make sure pillow supports these types
 
+
 def startFastAPI(host:str="0.0.0.0", port:int=80, log_level:str="error", proxy_headers:bool=True):
     print(f"\n{Color.yellow}Starting FastAPI...{Color.reset}")
     fastAPI.add_middleware(
@@ -31,9 +32,11 @@ def startFastAPI(host:str="0.0.0.0", port:int=80, log_level:str="error", proxy_h
     )
     uvicorn.run(fastAPI, host=host, port=port, log_level=log_level, proxy_headers=proxy_headers)
 
+
 def getIP(request:Request) -> str:
     """ Returns an IPv4 address attached in request headers """
     return request.headers.get("X-Forwarded-For", "Unknown IP").split(",")[0].strip()
+
 
 def getCurrentTime() -> str:
     """ Returns: current time in format 'h:min:sec AM/PM, month/day/year'"""

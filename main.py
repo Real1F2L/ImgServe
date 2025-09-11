@@ -1,11 +1,13 @@
-# v1.1.0
+# © 2025 1F2L - gegeha.com
+# v1.1.1
 # Thank you for checking out ImgServe!
 #
 # ImgServe is a free and open source image serving API.
 # Built for minimizing website load times and bandwidth.
 # Serve images at the correct size in a modern format!
 #
-# Contributions and modding is allowed, under no circumstances should you sell ImgServe, modded or not.
+# Contributions and modding are allowed, please do not sell ImgServe.
+# Exact specifications in LICENSE
 import os, time, threading, re
 #
 from pathlib import Path
@@ -25,11 +27,17 @@ from fastapi import Request, Response
 
 Image.MAX_IMAGE_PIXELS = None
 
+
 @utils.fastAPI.middleware("http")
-async def middleware(request: Request, call_next) -> any:
+async def middleware(request: Request, call_next):
     # Gather request info
-    xff: str = request.headers.get("x-forwarded-for").split(',')[0].strip() if request.headers.get("x-forwarded-for") else None
-    ip = xff if xff else request.client.host
+    
+    # Get IP
+    ip = request.headers.get("x-forwarded-for", "")
+    if ip:
+        ip = ip.split(',')[0].strip()
+    else:
+        ip = request.client.host if request.client else ""
     path = request.url.path
     method = request.method
 
@@ -44,11 +52,11 @@ async def middleware(request: Request, call_next) -> any:
     if request.url.path != "/favicon.ico":
         message: str = "".join(
             (
-                Color.green if good == 0 else Color.y if good == 1 else Color.red,
+                Color.green if good == 0 else Color.yellow if good == 1 else Color.red,
                 f"[{method}] ",
                 Color.reset,
                 f"{ip} - {path} ",
-                Color.green if good == 0 else Color.y if good == 1 else Color.red,
+                Color.green if good == 0 else Color.yellow if good == 1 else Color.red,
                 #                                  rjust - (method + brackets and spaces + ip + spaces and dash + path + status code length)
                 f" {f" {response.status_code}".rjust(rjust - (len(method) + 3 + len(ip) + 3 + len(path) + len(str(response.status_code))), "-")}",
                 Color.reset
@@ -60,9 +68,9 @@ async def middleware(request: Request, call_next) -> any:
     Logs.requestLogger().info(f"[{method}] {ip} - {path} [{response.status_code}]")
 
     # Headers
-    response.headers["Server"] = Config["Server"]
-    response.headers["Server-URL"] = Config["ServerURL"]
-    response.headers["Server-Version"] = Config["ServerVersion"]
+    response.headers["Server"] = Config.get("Server", "")
+    response.headers["Server-URL"] = Config.get("ServerURL", "")
+    response.headers["Server-Version"] = Config.get("ServerVersion", "v1.1.1")
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "same-origin"
     response.headers["Cache-Control"] = "no-store"
@@ -82,16 +90,19 @@ async def resizeImg(request:Request):
         t - The file type of response (default webp)
         ar - Keep aspect ratio
     """
-    rquery = request.query_params
+    query = request.query_params
+    reqFile = query.get("f") # f
 
     # Query param are required
-    if not rquery or not unquote(rquery.get("f")):
+    if not query or not reqFile:
         raise HTTPException(status_code=404)
+    assert reqFile is not None
+    reqFile = unquote(reqFile)
 
-    img: Path = Path(Config["fileLocation"]) / unquote(rquery.get("f"))
+    img: Path = Path(str(Config.get("FileLocation"))) / reqFile
 
     # \d+ matches one or more digits, groups for each digit
-    resMatch = re.match(r"(\d+)x(\d+)", unquote(rquery.get("s", "64x64")))
+    resMatch = re.match(r"(\d+)x(\d+)", unquote(query.get("s", "64x64")))
 
     if not resMatch:
         return HTTPException(status_code=400, detail="Size must be written in format ###x###")
@@ -101,11 +112,11 @@ async def resizeImg(request:Request):
     if width > 3000: width = 3000
     if height > 2000: height = 2000
 
-    requestedType = unquote(rquery.get("t", "webp"))
-    aspectRatio = unquote(rquery.get("ar", "y"))
+    requestedType = unquote(query.get("t", "webp"))
+    aspectRatio = unquote(query.get("ar", "y"))
 
     basename = img.name
-    cacheSavePath: Path = Path(Config["cacheLocation"]) / f"{str(img).replace("\\", "_")}_{width}x{height}_{"y" if aspectRatio == "y" else "n"}.{requestedType}"
+    cacheSavePath: Path = Path(str(Config["cacheLocation"])) / f"{str(img).replace("\\", "_")}_{width}x{height}_{"y" if aspectRatio == "y" else "n"}.{requestedType}"
 
     # Check if the location is good
     if not img.exists():
@@ -154,13 +165,16 @@ async def downloadImg(request:Request):
     Query Params:
         f - The location of the file you want
     """
-    rquery = request.query_params
+    query = request.query_params
+    reqFile = query.get("f") # f
 
     # Query param are required
-    if not rquery or not unquote(rquery.get("f")):
+    if not query or not reqFile:
         raise HTTPException(status_code=404)
+    assert reqFile is not None
+    reqFile = unquote(reqFile)
 
-    img: Path = Path(Config["fileLocation"]) / unquote(rquery.get("f"))
+    img: Path = Path(str(Config["fileLocation"])) / reqFile
 
     # Check if the location is good
     if not img.exists():
@@ -174,7 +188,7 @@ async def downloadImg(request:Request):
 
 def deleteCacheThread():
     print("Clear cache thread started!")
-    cacheLocation: Path = Path(Config["cacheLocation"])
+    cacheLocation: Path = Path(str(Config["cacheLocation"]))
 
     # infinite loop
     while True:
@@ -190,19 +204,19 @@ def deleteCacheThread():
             filePath.unlink()
 
         print(f"\n{Color.green}Cache successfully cleared at {utils.getCurrentTime()}{Color.reset}")
-        Logs["CacheLogger"].info(f"Cache cleared successfully")
+        Logs.getLogger("CacheLogger").info(f"Cache cleared successfully")
         
         # Wait for next cache clear
-        time.sleep(Config["clearCacheEveryHours"] * 3600) 
+        time.sleep(Config.get("clearCacheEveryHours", 4) * 3600)
 
 # Main
 if __name__ == "__main__":
     print(f"\n{Color.yellow}Running Main:{Color.reset}\nFound working directory: {utils.WORKINGDIR}")
     print(f"Config test: fileLocation={Config["fileLocation"]}, cacheLocation={Config["cacheLocation"]}, logLocation={Config["logLocation"]}")
-    Logs["TestLogger"].info("This is a test to confirm Logs are working!")
+    Logs.getLogger("TestLogger").info("This is a test to confirm Logs are working!")
 
     # Create file location folder
-    Path(Config["fileLocation"]).mkdir(parents=True, exist_ok=True)
+    Path(str(Config["fileLocation"])).mkdir(parents=True, exist_ok=True)
 
     # Start clear cache thread
     if Config["doClearCache"] == True:

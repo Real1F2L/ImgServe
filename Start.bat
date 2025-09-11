@@ -6,4 +6,4 @@ call venv\Scripts\activate.bat
 
 pip install -r requirements.txt
 
-python ./__init__.py
+python main.py

@@ -1,13 +1,13 @@
 FROM python:3
 
-# set working dir
 WORKDIR /app
 
-# Dockerfile runs before docker-compose volumes are made, so we need to copy requirements.txt in here
+# Copy requirements file in and install
 COPY requirements.txt .
-
-# install requirments
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy all project files into /app
+COPY . .
 
 # run script
 CMD ["python", "-u", "main.py"]

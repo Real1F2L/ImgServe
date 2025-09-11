@@ -11,6 +11,7 @@ if __name__ == "__main__":
 from Scripts.Color import Color
 from Scripts.Config import Config
 
+
 class Logs:
     _logFormatter = logging.Formatter('[%(asctime)s] %(levelname)s: %(message)s', datefmt="%Y-%m-%d %H:%M:%S")
     _loggers: dict[str, logging.Logger] = {}
@@ -34,7 +35,7 @@ class Logs:
         print(f"\n{Color.yellow}Loading Logs...{Color.reset}")
 
         # Set logLocation in constructor so it doesnt initialize before Config does
-        Logs._logLocation = Path(Config["logLocation"])
+        Logs._logLocation = Path(str(Config["logLocation"]))
 
         # Make the logs folder
         Logs._logLocation.mkdir(parents=True, exist_ok=True)
@@ -61,22 +62,26 @@ class Logs:
     # Quick loggers that are expected to exist
     @staticmethod
     def requestLogger() -> logging.Logger:
-        return Logs.getLogger("RequestLogger")
+        """ Get the Request Logger without possible None type or error (Since it will always exist) """
+        reqLogger = Logs.getLogger("RequestLogger")
+
+        assert reqLogger is not None
+        return reqLogger
     @staticmethod
     def errorLogger() -> logging.Logger:
-        return Logs.getLogger("ErrorLogger")
+        """ Get the Error Logger without possible None type or error (Since it will always exist) """
+        errLogger = Logs.getLogger("ErrorLogger")
+        assert errLogger is not None
+        return errLogger
     
     @classmethod
     def getLogger(cls, logger: str, default: Any=None) -> logging.Logger:
-        return cls._loggers.get(logger, default)
-    
-    @classmethod
-    def __class_getitem__(cls, logger: str) -> logging.Logger:
-        try:
-            return cls._loggers[logger]
-        except KeyError as e:
-            raise KeyError(f"{Color.red}Fatal error: logger {logger} does not exist{Color.reset}")
-        
+        foundLogger = cls._loggers.get(logger, default)
+
+        if not foundLogger:
+            raise KeyError(f"Logger {logger} does not exist")
+        else:
+            return foundLogger
 
 # Automagically create a Logs instance to load loggers
 loggers: dict = {"RequestLogger" : "INFO", "ErrorLogger" : "ERROR", "CacheLogger" : "INFO", "TestLogger" : "INFO"}

@@ -1,6 +1,7 @@
 import json
 #
 from pathlib import Path
+from typing import Any, TypeVar
 
 # Do something when this file is __main__
 if __name__ == "__main__":
@@ -10,13 +11,14 @@ if __name__ == "__main__":
 from Scripts.Color import Color
 from Scripts import utils
 
+
 class Config:
     """ Class for storing ImgServe config data """
     _data: dict
     _ConfigPath: Path
 
     # A bunch of default values that are REQUIRED in the config file
-    _requiredDict: dict[str, any] = {
+    _requiredDict: dict[str, Any] = {
         "Server" : "ImgServe",
         "ServerURL" : "example.com",
         "ServerVersion" : "v1.1.0",
@@ -77,7 +79,7 @@ class Config:
                 raise ValueError(f"{Color.red}Fatal error: missing required key in config ({key}){Color.reset}")
     
     @classmethod
-    def get(cls, key: str, default=None) -> any:
+    def get(cls, key: str, default=None) -> Any:
         """ 
         Get data from the config file
         
@@ -90,23 +92,20 @@ class Config:
         return cls._data.get(key, default)
     
     @classmethod
-    def __class_getitem__(cls, key: str) -> any:
+    def __class_getitem__(cls, key: str) -> str:
         """ 
-        Allow using class as a dictionary
+        Grab data using this class as a dictionary
+
+        Use .get() to avoid possible Nones, or cast to a type
 
         For example:
-            configInstance["Database"]["host"]
+            Config["fileLocation"]
         """
         try:
-            return cls._data[key]
+            return str(cls._data[key])
         except KeyError as e:
             print(f"{Color.red}KeyError getting config key {key}")
             raise e
-        
-    @classmethod
-    def __repr__(cls):
-        """ String representation of the class, just returns config data in string form """
-        return f"Config({str(cls._data)})"
 
 # Automagically create a Config instance to load config file
 config: Config = Config(utils.configPath)
