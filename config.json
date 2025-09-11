@@ -1,7 +1,7 @@
 {
     "Server": "ImgServe",
     "ServerURL": "example.com",
-    "ServerVersion": "v1.1.0",
+    "ServerVersion": "v1.1.1",
 
     "fileLocation": "/app/Files",
     "cacheLocation": "/app/Cache",
