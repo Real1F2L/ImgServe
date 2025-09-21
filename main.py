@@ -95,11 +95,11 @@ async def resizeImg(request:Request):
 
     # Query param are required
     if not query or not reqFile:
-        raise HTTPException(status_code=404)
+        raise HTTPException(status_code=404, detail="You must supply a file in url query")
     assert reqFile is not None
     reqFile = unquote(reqFile)
 
-    img: Path = Path(str(Config.get("FileLocation"))) / reqFile
+    img: Path = Path(str(Config["fileLocation"])) / reqFile
 
     # \d+ matches one or more digits, groups for each digit
     resMatch = re.match(r"(\d+)x(\d+)", unquote(query.get("s", "64x64")))
