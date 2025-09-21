@@ -11,17 +11,17 @@ ImgServe is a free and open source image serving API that can Cache, Resize, and
 - Store edited images for future use
  
 ## Examples of Resizing
-![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/3.png)
-![Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/3.png)
-![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/3.png)
+![Image 3 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=64x64&t=webp)
+![Image 3 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=128x128&t=webp)
+![Image 3 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=256x256&t=webp)
 
-![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/2.png)
-![Size 128Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/2.png)
-![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/2.png)
+![Image 2 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=64x64&t=webp)
+![Image 2 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=128x128&t=webp)
+![Image 2 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=256x256&t=webp)
 
-![Size 64](https://imgserve.gegeha.com/download?size=64&file=images/index/chopper/1.png)
-![Size 128](https://imgserve.gegeha.com/download?size=128&file=images/index/chopper/1.png)
-![Size 256](https://imgserve.gegeha.com/download?size=256&file=images/index/chopper/1.png)
+![Image 1 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=64x64&t=webp)
+![Image 1 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=128x128&t=webp)
+![Image 1 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=256x256&t=webp)
 
 #### All of these images are from the same file, resized to whatever I like it to be!
 
