@@ -1,0 +1,80 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="499"
+  height="379"
+  viewBox="0 0 499 379"
+>
+  <g transform="translate(0, -195)">
+    <defs>
+      <mask id="plate-mask">
+        <ellipse
+          cx="249.72224"
+          cy="464.64114"
+          rx="242.22224"
+          ry="102.38187"
+          fill="white"
+        />
+
+        <rect
+          x="105.22223"
+          y="207.7003"
+          width="288.99999"
+          height="268.99999"
+          rx="22"
+          fill="black"
+          stroke="#000"
+          stroke-width="15"
+        />
+      </mask>
+    </defs>
+
+    <!-- Outer plate -->
+    <ellipse
+      cx="249.72224"
+      cy="464.64114"
+      rx="242.22224"
+      ry="102.38187"
+      fill="transparent"
+      stroke="#000"
+      stroke-width="20"
+      mask="url(#plate-mask)"
+    />
+
+    <!-- Inner plate -->
+    <ellipse
+      cx="249.72223"
+      cy="460.32992"
+      rx="171.85186"
+      ry="63.70371"
+      fill="#000"
+      fill-opacity="0.05"
+      stroke="#000"
+      stroke-width="5"
+      mask="url(#plate-mask)"
+    />
+
+    <!-- Image Rectangle -->
+    <rect
+      x="115.22223"
+      y="207.7003"
+      width="268.99999"
+      height="268.99999"
+      rx="22"
+      fill="transparent"
+      stroke="#000"
+      stroke-width="15"
+    />
+
+    <!-- Mountain -->
+    <path
+      d="M120.46539 468.81636
+         L186.48325 343.81198
+         L218.8045 417.82773
+         L288.94847 271.44104
+         L370.09542 468.81636"
+      fill="none"
+      stroke="#000"
+      stroke-width="15"
+    />
+  </g>
+</svg>

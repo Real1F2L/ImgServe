@@ -1,4 +1,4 @@
-import asyncio
+import asyncio, shutil
 #
 from pathlib import Path
 from urllib.parse import unquote
@@ -14,6 +14,7 @@ from Scripts.Tasks import ClearCacheTask, PurgeCacheTask, ScheduledExecute
 
 # Routes
 from routes import Images
+from routes import Files
 
 
 # Middleware runs before every request is processed
@@ -89,6 +90,14 @@ if __name__ == "__main__":
 
     # Create Library folder
     ServerData.get_library_path().mkdir(exist_ok=True)
+
+    # Copy front-end assets into Library
+    asset_folder = utils.WORKINGDIR / "www/src/assets"
+    shutil.copytree(
+        asset_folder,
+        ServerData.get_library_path() / "ImgServe Web UI",
+        dirs_exist_ok=True
+    )
 
     # Create Cache folder
     ServerData.get_cache_path().mkdir(exist_ok=True)

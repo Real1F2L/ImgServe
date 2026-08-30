@@ -1,0 +1,50 @@
+
+
+#ExplorerTable {
+    width: 100%;
+
+    background-color: var(--foreground3);
+    border-radius: 24px;
+
+    padding: max(10px, 0.5%);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+#ExplorerTable td {
+    text-align: center;
+}
+.Folder > td:nth-child(1)::after {
+    content: "";
+    display: block;
+    width: 45px;
+    aspect-ratio: 1 / 1;
+
+    margin-inline: auto;
+
+    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Folder.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.File > td:nth-child(1)::after {
+    content: "";
+    display: block;
+    width: 40px;
+    aspect-ratio: 1 / 1;
+
+    margin-inline: auto;
+
+    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/File2.svg");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transform: scale(1.4);
+}
+.Image > td:nth-child(1)::after{
+    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Image.svg");
+    transform: scale(1);
+}

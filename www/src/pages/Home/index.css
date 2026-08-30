@@ -40,6 +40,9 @@ main > section {
 .heroIcon {
     max-width: 200px;
 }
+html.dark .heroIcon {
+    filter: invert(1);
+}
 
 #hero > h2 {
     height: 33px;
@@ -48,15 +51,14 @@ main > section {
 
 #HeroHeader {
     color: inherit;
+    font-size: 1.5rem;
 
     display: inline-flex;
     flex-direction: column;
 
     margin-left: 15px;
 
-    font-size: 1.5rem;
-
-
+    user-select: none;
     animation: header-slide 8s infinite;
 }
 
@@ -104,4 +106,26 @@ main > section {
     100% {
         transform: translateY(calc(-8rem - 1px));
     }
+}
+
+#FileExplorer {
+    max-width: 1200px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#FileExplorer p {
+    margin-bottom: 30px;
+}
+
+#FileExplorer #currentDir {
+    height: 60px;
+    
+    align-self: flex-start;
+    margin-left: 2dvw;
+
+    font-size: 2rem;
 }

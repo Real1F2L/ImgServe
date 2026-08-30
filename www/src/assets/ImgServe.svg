@@ -1,0 +1,36 @@
+<svg width="499" height="575" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <defs>
+      <mask id="plate-mask">
+        <!-- White elipse -->
+        <ellipse
+          cx="249.72224"
+          cy="464.64114"
+          rx="242.22224"
+          ry="102.38187"
+          fill="white"
+        />
+
+        <!-- Black rect -->
+        <rect fill="black" x="105.22223" y="207.7003" width="288.99999" height="268.99999" id="svg_2" stroke="#000" rx="22" stroke-width="15"/>
+      </mask>
+    </defs>
+
+    <!-- Outer circle -->
+    <ellipse fill="transparent" cx="249.72224" cy="464.64114" id="svg_12" rx="242.22224" ry="102.38187" stroke-width="20" stroke="#000" mask="url(#plate-mask)"/>
+    
+    <!-- Inner circle -->
+    <ellipse fill="#000000" cx="249.72223" cy="460.32992" id="svg_10" rx="171.85186" ry="63.70371" stroke-width="5" stroke="#000" fill-opacity="0.05" mask="url(#plate-mask)"/>
+
+    <!-- Image Rectangle -->
+    <rect fill="transparent" x="115.22223" y="207.7003" width="268.99999" height="268.99999" id="svg_2" stroke="#000" rx="22" stroke-width="15"/>
+
+    <!-- Mountain -->
+    <path fill="none" opacity="NaN" d="m120.46539,468.81636c-0.68769,0 66.01786,-125.00438 66.01786,-125.00438c0,0 32.32125,74.83815 32.32125,74.01575c0,-0.8224 70.14397,-146.38669 70.14397,-146.38669c0,0 81.14695,208.88888 81.14695,208.88887" id="svg_9" stroke-width="15" stroke="#000"/>
+
+    <!-- Steam -->
+    <path transform="rotate(-41 286.755 91.772)" fill="#0fffff" stroke-width="9" fill-opacity="0" opacity="NaN" d="m230.76249,155.86939c0,-0.73675 41.25801,-5.89401 43.46826,-40.52126c2.21025,-34.62726 20.629,-51.57252 42.73152,-47.15201c22.1025,4.4205 25.78625,-27.99651 25.78625,-40.52126" id="svg_26" stroke="#000" stroke-dasharray="5,5"/>
+    <path transform="rotate(-41 245.508 91.311)" fill="#0fffff" stroke="#000" stroke-width="10" fill-opacity="0" opacity="NaN" d="m189.21165,155.75586c0,-0.74074 41.48148,-5.92593 43.7037,-40.74074c2.22222,-34.81482 20.74074,-51.85186 42.96297,-47.40741c22.22222,4.44444 25.92592,-28.14815 25.92592,-40.74074" id="svg_29" stroke-dasharray="5,5"/>
+    <path transform="rotate(-41 202.29 90.571)" fill="#0fffff" stroke="#000" stroke-width="10" fill-opacity="0" opacity="NaN" d="m145.99428,155.01512c0,-0.74074 41.48148,-5.92593 43.7037,-40.74074c2.22222,-34.81482 20.74074,-51.85186 42.96297,-47.40741c22.22222,4.44444 25.92592,-28.14815 25.92592,-40.74074" id="svg_30" stroke-dasharray="5,5"/>
+  </g>
+</svg>

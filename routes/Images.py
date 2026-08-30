@@ -1,3 +1,5 @@
+# Image requesting routes
+
 import mimetypes, io
 #
 from pathlib import Path

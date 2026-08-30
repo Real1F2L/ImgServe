@@ -1,4 +1,4 @@
 fastapi
-uvicorn
-mimetype
+slowapi
 pillow
+uvicorn

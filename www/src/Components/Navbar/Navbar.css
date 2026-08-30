@@ -62,3 +62,78 @@ nav {
     width: 100%;
     height: 100%;
 }
+html.dark #Home img {
+    filter: invert(1);
+}
+
+/** Theme Toggle Switch ----------------- */
+/* <a> container */
+.ThemeToggleContainer {
+    width: 70px;
+    height: 32px;
+
+    cursor: pointer;
+}
+
+/* Align with the pfp when logged in */
+body.loggedIn .ThemeToggleContainer:not(.pfp-hidden) {
+    margin-top: 25px;
+}
+
+/* Rounder container inside */
+.ThemeToggleContainer>div {
+    position: relative;
+    width: 70px;
+    height: 32px;
+
+    background-color: var(--orange-accent);
+    border-radius: 14px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+
+    padding-top: 2px;
+
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* The dot the moves when you click */
+.ThemeToggleContainer>div::before {
+    content: "";
+    position: absolute;
+    aspect-ratio: 1/1;
+    width: 25px;
+    top: 4px;
+    left: 4px;
+
+    background-color: var(--orange-accent-light);
+    border-radius: 50%;
+
+    background-image: url("https://imgserve.gegeha.com/image/download?f=images/Navbar/Sun.svg");
+    background-size: cover;
+
+    transition: left 0.3s ease-in-out,
+        background-color 0.3s ease-in-out,
+        background-image 0.3s ease-in-out;
+
+    z-index: 1;
+}
+
+.ThemeToggleContainer.dark>div::before {
+    left: 40px;
+    background-image: url("https://imgserve.gegeha.com/image/download?f=images/Navbar/Moon.svg");
+}
+
+/* The visual dot on each side */
+.ThemeSide {
+    aspect-ratio: 1/1;
+    width: 15px;
+
+    border-radius: 50%;
+    background-color: var(--orange-accent-dark);
+
+    transform: translateY(-1px);
+    transition: background-color 0.3s ease-in-out;
+}
