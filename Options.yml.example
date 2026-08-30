@@ -1,0 +1,29 @@
+# ImgServe Server Options
+# This file is expected to be inside the working directory
+
+server_name: ImgServe
+server_url: imgserve.gegeha.com
+server_version: "v1"
+
+host: 0.0.0.0
+port: 8080
+CORS_origins: [
+  "http://localhost",
+  "http://127.0.0.1",
+
+  # Add your website address here
+  # Ex: "https://www.gegeha.com",
+]
+
+image_location: "/app/Library/"
+cache_location: "/app/Cache/"
+
+cache_persists: false # Disables deleting cached images
+clear_cache_every_hours: 24
+
+# ImgServeIgnore is similar to gitignore. ImgServe wll refuse to serve any files matching the strings in this file
+enable_imgserve_ignore: true
+imgserve_ignore_location: /app/ImgServeIgnore
+
+enable_imgserve_fontend_support: true
+imgserve_frontend_url: https://imgserve.gegeha.com/

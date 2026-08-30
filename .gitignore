@@ -1,70 +1,67 @@
-# This specific repo
-Files/
-
-# OS Garbage
-.DS_Store
-Thumbs.db
-Desktop.ini
-
-# General
-build/
-out/
-dist/
-bin/
-cache/
+# Temporary Files
+tmp/
+var/
+*.tmp
 *.bak
+*.log
 
-# Compiled versions
-*.exe
-*.jar
+# Build Output
+build/
+.builds
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
 
-# IDE
+# IDE / Editor
+.vs/
+*.suo
+*.user
+*.sln.docstates
+.idea/
 .vscode
-.vscode-test/
-.idea
+
+# Generated Files
+*.obj
+*.tmp_proj
+
+# Operating System
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archives
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+
+# Environment
+Options.yml
+!Options.yml.example
+.env
 
 # Logs
-*.log
 logs/
-*.pid
-*.seed
-*.pid.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Python
+# Caches
+.cache/
+.cache-loader/
+temp/
+
+# python
+.venv/
 __pycache__/
-.pytest_cache/
-*.pyo
-*.pyd
-*.pyc
-*.pdb
-*.egg
-*.egg-info/
-.venv
-.env
-*.env
 
-
-
-# Java
-*.class
-*.war
-*.ear
-*.iml
-*.ipr
-*.iws
-target/
-
-# C
-*.o
-*.obj
-*.so
-*.dll
-*.dylib
-*.out
-
-# Compressed
-*.zip
-*.tar
-*.tar.gz
-*.rar
-*.7z
+# Project specific
+tests/
+pfp/
+git-commit.txt
+Cache/
+Library/
