@@ -121,8 +121,12 @@ async def resize_img(
     # Generate cache path
     cache_path = (
         ServerData.get_cache_path()
+        / img_path.parent.relative_to(ServerData.get_library_path())
         / f"{img_path.stem}_{w or 'auto'}x{h or 'auto'}.{t}"
     )
+
+    # Make the parent directory if it doesn't exist
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
 
     # Return cached image if it already exists
     if cache_path.is_file():
@@ -163,6 +167,7 @@ async def resize_img(
         # Update the cache path
         cache_path = (
             ServerData.get_cache_path()
+            / img_path.parent.relative_to(ServerData.get_library_path())
             / f"{img_path.stem}_{new_width if w else 'auto'}x{new_height if h else 'auto'}.{t}"
         )
 
