@@ -1,0 +1,107 @@
+/** © 2026 1F2L. All rights reserved. */
+
+/*
+Fonts fallbacks used on this page
+Roboto: font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+Kalam: font-family: 'Kalam', 'Comic Sans MS', 'Segoe Script';
+*/
+
+/* Size all sections of main (except for the footer) */
+main > section {
+    position: relative;
+    width: 100vw;
+    min-height: 300px;
+
+    padding: max(10px, 2%);
+}
+
+#hero {
+    background-image: linear-gradient(to right, var(--foreground2), var(--foreground));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.horFlex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+}
+
+#hero h1 {
+    font-size: clamp(2rem, 15vw, 7rem);
+}
+
+.heroIcon {
+    max-width: 200px;
+}
+
+#hero > h2 {
+    height: 33px;
+    overflow-y: hidden;
+}
+
+#HeroHeader {
+    color: inherit;
+
+    display: inline-flex;
+    flex-direction: column;
+
+    margin-left: 15px;
+
+    font-size: 1.5rem;
+
+
+    animation: header-slide 8s infinite;
+}
+
+/* Holds each item for 15% */
+/* Travels for 10% */
+@keyframes header-slide {
+    /* Jump to the top on reset */
+    0% {
+        transform: translateY(0);
+    }
+
+    /* Hold on item 1 */
+    15% {
+        transform: translateY(0);
+    }
+
+    /* Travel */
+    25% {
+        transform: translateY(-2rem);
+    }
+    /* Hold on item 2 */
+    40% {
+        transform: translateY(-2rem);
+    }
+
+    /* Travel */
+    50% {
+        transform: translateY(calc(-4rem - 1px));
+    }
+    /* Hold on item 3 */
+    65% {
+        transform: translateY(calc(-4rem - 1px));
+    }
+
+    /* Travel */
+    75% {
+        transform: translateY(calc(-6rem - 1px));
+    }
+    /* Hold on item 4 */
+    90% {
+        transform: translateY(calc(-6rem - 1px));
+    }
+
+    /* Travel */
+    100% {
+        transform: translateY(calc(-8rem - 1px));
+    }
+}

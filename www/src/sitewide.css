@@ -1,0 +1,543 @@
+/* © 2024 1F2L. All rights reserved. */
+
+/* Remove padding, margin, overflow on main and body
+    Set a default background color that isnt solid white
+    Set default rem size */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    background-color: var(--foreground);
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+
+    font-size: 16px;
+
+    /* Normally, use a light white and blue theme */
+    --font-black: black;
+    --font-white: white;
+    --white: white;
+    --foreground: #f0ecec;
+    --foreground2: #f5f5f5;
+    --foreground3: #d6d6d6;
+    --foreground-accent: #dae7f7;
+    --foreground-accent2: #aecef7;
+
+    /* Blue accent */
+    --blue-accent: rgb(119, 169, 245);
+    --blue-accent-transparent: rgba(119, 169, 245, 0.5);
+    --blue-accent-light: rgb(144, 186, 250);
+    --blue-accent-dark: rgb(110, 154, 221);
+    --blue-accent-dark-transparent: rgba(110, 154, 221, 0.3);
+    --blue-accent-dark2: rgb(93, 130, 185);
+    --blue-accent-dark2-transparent: rgba(93, 130, 185, 0.7);
+
+    /* Orange accent */
+    --orange-accent: rgb(220, 140, 45);
+    --orange-accent-transparent: rgba(220, 140, 45, 0.5);
+    --orange-accent-light: rgb(235, 165, 80);
+    --orange-accent-dark: rgb(170, 100, 25);
+    --orange-accent-dark-transparent: rgba(170, 100, 25, 0.3);
+    --orange-accent-dark2: rgb(130, 75, 20);
+    --orange-accent-dark2-transparent: rgba(130, 75, 20, 0.7);
+}
+
+@media (orientation: portrait) {
+
+    html,
+    body {
+        /* Reduce root font size 16 -> 14 */
+        font-size: 14px;
+    }
+}
+
+/* Optionally, switch to a dark black and purple theme */
+html.dark,
+body.dark {
+    /* Swap white and black fonts */
+    --font-black: white;
+    --font-white: black;
+
+    /* White foreground -> Black foreground */
+    --white: black;
+    --foreground: rgb(30, 30, 30);
+    --foreground2: rgb(40, 40, 40);
+    --foreground3: rgb(50, 50, 50);
+    --foreground-accent: rgb(50, 20, 50);
+    --foreground-accent2: rgb(70, 20, 70);
+
+    /* Blue accent -> Purple accent */
+    --blue-accent: #280141;
+    --blue-accent-transparent: rgba(40, 1, 65, 0.5);
+    --blue-accent-light: rgb(68, 21, 97);
+    --blue-accent-dark: #1d0030;
+    --blue-accent-dark-transparent: rgba(33, 1, 53, 0.3);
+    --blue-accent-dark2: #150023;
+    --blue-accent-dark2-transparent: rgba(26, 0, 42, 0.7);
+
+    /* Orange accent -> Red accent */
+    --orange-accent: #d946ef;
+    --orange-accent-transparent: rgba(217, 70, 239, 0.5);
+    --orange-accent-light: #e879f9;
+    --orange-accent-dark: #a21caf;
+    --orange-accent-dark-transparent: rgba(162, 28, 175, 0.3);
+    --orange-accent-dark2: #86198f;
+    --orange-accent-dark2-transparent: rgba(134, 25, 143, 0.7);
+}
+
+/* Main must be atleast 1 entire screen in size, and the items inside
+    are sorted properly */
+main {
+    flex: 5;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    min-width: 0;
+    
+
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+
+/* ALL ELEMENTS */
+* {
+    /* Antialiase fonts, and default to inheriting them from parent */
+    -webkit-font-smoothing: subpixel-antialiased !important;
+    font-family: inherit;
+
+    /* Make padding shrink elements instead of expanding */
+    box-sizing: border-box;
+
+    scroll-margin-top: 30vh;
+
+    color: var(--font-black);
+}
+
+/* Default to Kalam font and remove padding/margin from texts */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+a,
+pre {
+    font-family: 'Kalam', 'Comic Sans MS', 'Segoe Script';
+    padding: 0;
+    margin: 0;
+}
+
+/* Remove annoying iframe borders */
+iframe {
+    border: none;
+}
+
+/* Sleek scroll bar */
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: var(--font-black);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(153, 153, 153);
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+
+/* Stylize Weblinks  */
+a {
+    color: rgb(58, 137, 255);
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: rgb(147, 190, 255);
+}
+
+button {
+    color: var(--font-black);
+    cursor: pointer;
+}
+
+/* Give anchors in text a slight glow in light mode so they dont blend in */
+html:not(.dark) p>a,
+body:not(.dark) p>a {
+    filter: drop-shadow(0px 0px 10px rgba(256, 256, 256, 0.5));
+}
+
+html:not(.dark) a:hover,
+body:not(.dark) a:hover {
+    color: rgb(87, 151, 247);
+}
+
+
+span {
+    color: rgb(58, 137, 255);
+    font-family: inherit;
+}
+
+
+
+/* text alignment */
+.l {
+    text-align: left;
+}
+
+.r {
+    text-align: right;
+}
+
+.c {
+    text-align: center;
+}
+
+/* visibility */
+.visible {
+    visibility: visible;
+}
+
+.noVisible {
+    visibility: hidden;
+}
+
+.noPadding {
+    padding: 0;
+    margin: 0;
+}
+
+/* Text Selection */
+.allowSelect {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+}
+
+.noSelect {
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Emoji classes for svgs */
+.Emoji-12px {
+    width: 12px;
+    height: 12px;
+}
+
+.Emoji-16px {
+    width: 16px;
+    height: 16px;
+}
+
+.Emoji-32px {
+    width: 32px;
+    height: 32px;
+}
+
+body>main>section,
+.capWidthToScreen {
+    max-width: 1920px;
+}
+
+/** Support for printing web-page */
+@media print {
+    * {
+        visibility: visible;
+        overflow: visible !important;
+        animation: none !important;
+
+        color: black !important;
+        font-size: 1.15rem !important;
+        text-align: left !important;
+
+        filter: none !important;
+        transform: none !important;
+    }
+
+    .Do-Not-Print {
+        display: none !important;
+    }
+}
+
+.break {
+    break-after: page;
+}
+
+
+/* Animations */
+
+/* Typing caret */
+@keyframes blink-caret {
+    from,
+    to {
+        border-color: transparent
+    }
+    50% {
+        border-color: var(--font-black);
+    }
+}
+/*
+To use:
+    border-right: 5px solid var(--font-black);
+    animation: blink-caret .75s step-end infinite;
+}
+*/
+
+@keyframes mvLeft-centered {
+    0% {
+        transform: translate(calc(-50% + 100px), -50%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 100;
+    }
+}
+
+@keyframes mvLeft-centeredX {
+    0% {
+        transform: translateX(calc(-50% + 100px));
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(-50%);
+        opacity: 100;
+    }
+}
+
+@keyframes mvLeft {
+    0% {
+        visibility: visible;
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        transform: none;
+        opacity: 100;
+    }
+}
+
+@keyframes mvRight {
+    0% {
+        visibility: visible;
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        transform: none;
+        opacity: 100;
+    }
+}
+
+@keyframes mvRight-flipped {
+    0% {
+        visibility: visible;
+        transform: translateX(-100px) rotate(180deg);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        transform: rotate(180deg);
+        opacity: 100;
+    }
+}
+
+@keyframes mvRight-centered {
+    0% {
+        visibility: visible;
+        transform: translate(calc(-50% - 100px), -50%);
+        opacity: 0;
+    }
+
+    100% {
+        visibility: visible;
+        transform: translate(-50%, -50%);
+        opacity: 100;
+    }
+}
+
+@keyframes mvRight-centerX {
+    0% {
+        transform: translateX(calc(-50% - 100px));
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(calc(-50%));
+        opacity: 100;
+    }
+}
+
+@keyframes mvUp {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: none;
+        opacity: 100;
+    }
+}
+
+@keyframes mvUp-short {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: none;
+        opacity: 100;
+    }
+}
+
+@keyframes mvUp-centered {
+    0% {
+        transform: translate(-50%, calc(-50% + 100px));
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        opacity: 100;
+    }
+}
+
+@keyframes mvUp-centeredX {
+    0% {
+        transform: translate(-50%, 100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 100;
+    }
+}
+
+@keyframes mvDown {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: none;
+        opacity: 100;
+    }
+}
+
+@keyframes FadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 100;
+    }
+}
+
+/* ----------------------------------- hide anims -------------------------------------- */
+@keyframes hideUp {
+    0% {
+        transform: none;
+        opacity: 100;
+    }
+
+    100% {
+        transform: translateY(300px);
+        opacity: 0;
+    }
+}
+
+@keyframes hideLeft {
+    0% {
+        transform: none;
+        opacity: 100;
+    }
+
+    100% {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+}
+
+@keyframes hideRight {
+    0% {
+        transform: none;
+        opacity: 100;
+    }
+
+    100% {
+        transform: translateX(1000px);
+        opacity: 0;
+    }
+}
+
+/* Register fonts*/
+@font-face {
+    font-family: "Kalam";
+    src: url("https://www.gegeha.com/fonts/Kalam/Kalam-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("https://www.gegeha.com/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Noto Sans Japanese";
+    src: url("https://www.gegeha.com/fonts/Noto Sans Japanese/NotoSansJP-VariableFont_wght.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Cabin";
+    src: url("https://www.gegeha.com/fonts/Cabin/Cabin-VariableFont.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Shantell Sans";
+    src: url("https://www.gegeha.com/fonts/Shantell_Sans/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Finger Paint";
+    src: url("https://www.gegeha.com/fonts/Finger Paint/FingerPaint-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}

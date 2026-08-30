@@ -1,0 +1,64 @@
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
+
+    pointer-events: none;
+    z-index: 5;
+}
+
+#navTop,
+#navBottom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 60px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+
+    
+    padding-left: max(2%, 10px);
+    padding-right: max(2%, 10px);
+    
+    pointer-events: auto;
+}
+#navBottom {
+    top: auto;
+    bottom: 0;
+    height: auto;
+}
+
+/* Halfs inside */
+.navLeft,
+.navRight {
+
+    padding: 5px;
+    border-radius: 24px;
+}
+
+/* Home icon/button */
+#Home {
+    text-decoration: none;
+
+    display: block;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#Home h1 {
+    font-size: 1.5rem;
+}
+#Home img {
+    width: 100%;
+    height: 100%;
+}
