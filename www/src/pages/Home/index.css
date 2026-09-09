@@ -107,25 +107,3 @@ html.dark .heroIcon {
         transform: translateY(calc(-8rem - 1px));
     }
 }
-
-#FileExplorer {
-    max-width: 1200px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#FileExplorer p {
-    margin-bottom: 30px;
-}
-
-#FileExplorer #currentDir {
-    height: 60px;
-    
-    align-self: flex-start;
-    margin-left: 2dvw;
-
-    font-size: 2rem;
-}

@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from Scripts.ServerData import ServerData
 from Scripts import utils
 from fastapi import Query
+from PIL import Image
 
 
 @utils.fastAPI.get("/api/v1/folder-search")
@@ -65,7 +66,7 @@ def file_search(
 
 @utils.fastAPI.get("/api/v1/file-search")
 def file_search(
-    f: str = Query(..., title="The location of the directory you want"),
+    f: str = Query(..., title="The location of the file you want"),
 ):
     """Returns data on a file in the library"""
     path = ServerData.get_library_path() / f
@@ -84,13 +85,24 @@ def file_search(
     is_image = extension in utils.supported_download_image_extensions
     is_video = extension in utils.supported_video_extentions
 
+    # Get image size data
+    if is_resizable_image:
+        try:
+            with Image.open(path) as img:
+                width, height = img.size
+        except Exception as e:
+            width, height = None, None
+    else:
+        width, height = None, None
+
     return JSONResponse({
         "path": f,
         "name": name,
         "extension": extension,
         "is_image": is_image,
-        "is_image": is_image,
         "is_resizable_image": is_resizable_image,
+        "width": width,
+        "height": height,
         "is_video": is_video,
         "last_modified": path.stat().st_mtime,
         "size_bytes": path.stat().st_size,

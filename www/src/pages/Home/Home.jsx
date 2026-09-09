@@ -22,9 +22,7 @@ function Home() {
         </h2>
       </section>
 
-      <section id='FileExplorer'>
-        <FileExplorer />
-      </section>
+      <FileExplorer />
     </>
   )
 }
