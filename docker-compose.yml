@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  imgserve:
+    container_name: imgserve
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./Options.yml:/app/Options.yml:ro
+      - ./Library:/app/Library
+      - ./Cache:/app/Cache
+    restart: unless-stopped

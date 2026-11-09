@@ -1,9 +1,8 @@
 # ImgServe Server Options
 # This file is expected to be inside the working directory
 
-server_name: ImgServe
-server_url: imgserve.gegeha.com
-server_version: "v1"
+# Server url is used to generate image urls
+server_url: SERVER_URL_HERE
 
 host: 0.0.0.0
 port: 8080
@@ -12,18 +11,17 @@ CORS_origins: [
   "http://127.0.0.1",
 
   # Add your website address here
-  # Ex: "https://www.gegeha.com",
+  "https://www.example.com
 ]
 
-image_location: "/app/Library/"
-cache_location: "/app/Cache/"
+# Change the docker mount instead of these values!
+image_location: "./Library/"
+cache_location: "./Cache/"
 
-cache_persists: false # Disables deleting cached images
-clear_cache_every_hours: 24
+# Disables deleting cached images
+cache_persists: false
+keep_cache_for_hours: 24 # Set to -1 to disable
+purge_cache_time: "00:00:00" # The time of day to purge cache (Default midnight)
 
-# ImgServeIgnore is similar to gitignore. ImgServe wll refuse to serve any files matching the strings in this file
-enable_imgserve_ignore: true
-imgserve_ignore_location: /app/ImgServeIgnore
-
-enable_imgserve_fontend_support: true
-imgserve_frontend_url: https://imgserve.gegeha.com/
+# Updating statistics may cause a lot of reads to disk at once depending on the size of your library. Set to -1 to disable.
+update_statistics_every_minutes: 10

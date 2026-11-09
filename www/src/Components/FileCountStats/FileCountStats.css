@@ -1,0 +1,105 @@
+.FileCountStats {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: min(10vw, 150px);
+    flex-wrap: wrap;
+
+    background-color: var(--foreground);
+}
+
+.Stat-Circle {
+    position: relative;
+    height: 250px; /* Size of the circle */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    aspect-ratio: 1/1;
+}
+
+.Stat-Circle::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    border-radius: 50%;
+
+    /* Add a conic mask and animate the progress to increase */
+    mask: conic-gradient(
+        from -90deg,
+        black var(--progress),
+        transparent var(--progress)
+    );
+    animation: reveal 1s ease-in-out forwards;
+}
+
+/* Create an angle variable */
+@property --progress {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+/* Animate the angle in a full circle */
+@keyframes reveal {
+  to {
+    --progress: 360deg;
+  }
+}
+
+/* Inner cover to make the circle look hollow */
+.Stat-Circle::after {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 80%;
+
+    /* Center */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--foreground);
+    border-radius: 50%;
+}
+
+.Stat-Circle > :is(h2, p) {
+    width: 100%;
+    text-align: center;
+
+    color: var(--font-black);
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    /* Show above the circle */
+    z-index: 2;
+}
+
+/* Add increasing delay to each for styling */
+.Stat-Circle:nth-child(2)::before {
+    animation-delay: 0.1s;
+}
+.Stat-Circle:nth-child(3)::before {
+    animation-delay: 0.2s;
+}
+.Stat-Circle:nth-child(4)::before {
+    animation-delay: 0.3s;
+}
+.Stat-Circle:nth-child(5)::before {
+    animation-delay: 0.4s;
+}
+
+/* Add colors */
+.Stat-Circle:nth-child(2n)::before {
+    background-color: red;
+}
+.Stat-Circle:nth-child(2n + 2)::before {
+    background-color: #4c21a0;
+}
+.Stat-Circle:nth-child(2n + 3)::before {
+    background-color: #b90898;
+}

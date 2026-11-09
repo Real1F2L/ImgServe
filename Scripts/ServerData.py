@@ -4,28 +4,27 @@ from typing import Any
 from pathlib import Path
 from Scripts import utils
 from Scripts.utils import Color
+from fastapi import HTTPException
 
 # Default config values
 _defaults: dict = {
-    "server_name": "ImgServe",
-    "server_url": "imgserve.gegeha.com",
-    "server_version": "v2",
+    "server_url": "missing_server_url_value",
 
     "host": "0.0.0.0",
     "port": 8080,
     "CORS_origins": [
         "http://localhost",
-        "http://127.0.0.1",
+        "http://127.0.0.1"
     ],
 
-    "image_location": "/app/Library/",
-    "cache_location": "/app/Cache/",
+    "image_location": "./Library/",
+    "cache_location": "./Cache/",
 
     "cache_persists": False,
-    "clear_cache_every_hours": 24,
+    "keep_cache_for_hours": 24,
+    "purge_cache_time": "00:00:00",
 
-    "enable_imgserve_ignore": True,
-    "imgserve_ignore_location": "/app/ImgServeIgnore",
+    "update_statistics_every_minutes": 10,
 }
 
 class ServerData:
@@ -92,7 +91,7 @@ class ServerData:
             return cls._data[key]
 
         except KeyError:
-            print(f"{Color.r}Attempted to access value from Options.yml that doesn't exist!{Color.re}")
+            print(f"{Color.r}Attempted to access value from Options.yml that doesn't exist! Value: {key}{Color.re}")
 
             # Attempt to return default
             if key in _defaults.keys():
@@ -110,3 +109,19 @@ class ServerData:
         return Path(str(cls.getData("cache_location"))).resolve()
 
 ServerData.start()
+
+def resolve_library_path(requested_path: str) -> Path:
+    root = ServerData.get_library_path()
+
+    # Treat "/" as the root of the library folder
+    try:
+        library_path = (root / requested_path.lstrip("/")).resolve()
+    except RuntimeError as exc:
+        raise HTTPException(status_code=400, detail="Invalid path") from exc
+
+    # Prevent directory traversal
+    if not library_path.is_relative_to(root):
+        raise HTTPException(status_code=403, detail="Invalid path")
+
+    # Return the path inside the library folder
+    return library_path

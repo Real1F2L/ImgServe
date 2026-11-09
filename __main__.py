@@ -15,6 +15,7 @@ from Scripts.Tasks import ClearCacheTask, PurgeCacheTask, ScheduledExecute
 # Routes
 from routes import Images
 from routes import Files
+from routes import Data
 
 
 # Middleware runs before every request is processed
@@ -51,8 +52,6 @@ async def middleware(request: Request, call_next):
         print(message)
 
     # Set response headers
-    response.headers["Server"] = ServerData.getData("server_name")
-    response.headers["Server-Version"] = ServerData.getData("server_version")
     response.headers["Server-URL"] = ServerData.getData("server_url")
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "same-origin"
@@ -60,29 +59,6 @@ async def middleware(request: Request, call_next):
 
     # Return response
     return response
-
- 
-async def start_cache_tasks():
-    """Starts the cache clearing and purging tasks"""
-    cache_persists = bool(ServerData.getData("cache_persists"))
-
-    if not cache_persists:
-        print(f"{Color.y}Creating cache clearing tasks...\n{Color.re}")
-
-        # Create clear cache task
-        clear_cache_task = ClearCacheTask("Clear Cache Task", execute_every_hours=1)
-
-
-        # Load purge time
-        purge_cache_time = time.fromisoformat(ServerData.getData("purge_cache_time"))
-        purge_cache_schedule = ScheduledExecute(purge_cache_time)
-
-        # Create purge task
-        purge_cache_task = PurgeCacheTask("Purge Cache Task", scheduled_executes=[purge_cache_schedule], execute_now=True)
-
-        # Start both in the background
-        asyncio.create_task(clear_cache_task.start_task())
-        asyncio.create_task(purge_cache_task.start_task())
 
 
 # Main
@@ -101,9 +77,6 @@ if __name__ == "__main__":
 
     # Create Cache folder
     ServerData.get_cache_path().mkdir(exist_ok=True)
-
-    # Start cache tasks
-    asyncio.run(start_cache_tasks())
 
     # Start FastAPI
     print(f"\n\n{Color.y}Starting FastAPI...\n{Color.re}")

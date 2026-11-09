@@ -2,33 +2,32 @@
 
 import os
 #
-from fastapi import HTTPException
+from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
-from Scripts.ServerData import ServerData
+from Scripts.ServerData import ServerData, resolve_library_path
 from Scripts import utils
 from fastapi import Query
 from PIL import Image
 
 
 @utils.fastAPI.get("/api/v1/folder-search")
+@utils.limiter.limit("60/minute")
 def file_search(
+    request: Request,
     f: str = Query("/", title="The location of the directory you want"),
 ):
     """Returns the files and dirs inside a Library folder"""
-    path = ServerData.get_library_path() / f
 
-    # Prevent directory traversal
-    if not path.is_relative_to(ServerData.get_library_path()):
-        raise HTTPException(status_code=403, detail="Invalid path")
+    dir = resolve_library_path(f)
 
-    # Reject non-dir paths
-    if not path.is_dir():
+    # Exists and is a directory
+    if not dir.is_dir():
         raise HTTPException(status_code=400, detail="Path does not exist or is not a directory")
 
     dirs = []
     files = []
 
-    for entry in os.scandir(path):
+    for entry in os.scandir(dir):
 
         # Dirs
         if entry.is_dir():
@@ -65,17 +64,16 @@ def file_search(
     })
 
 @utils.fastAPI.get("/api/v1/file-search")
+@utils.limiter.limit("60/minute")
 def file_search(
+    request: Request,
     f: str = Query(..., title="The location of the file you want"),
 ):
     """Returns data on a file in the library"""
-    path = ServerData.get_library_path() / f
-    
-    # Prevent directory traversal
-    if not path.is_relative_to(ServerData.get_library_path()):
-        raise HTTPException(status_code=403, detail="Invalid path")
 
-    # Reject non-dir paths
+    path = resolve_library_path(f)
+
+    # Exists
     if not path.is_file():
         raise HTTPException(status_code=400, detail="Path does not exist or is not a file")
 

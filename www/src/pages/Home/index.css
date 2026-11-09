@@ -38,6 +38,9 @@ main > section {
 }
 
 .heroIcon {
+    position: relative;
+    top: -40px; /* Visually center*/
+
     max-width: 200px;
 }
 html.dark .heroIcon {

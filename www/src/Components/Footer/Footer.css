@@ -1,0 +1,104 @@
+#gegeha-footer {
+    position: relative;
+    top: 40px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.CC-Container {
+    min-height: 40px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--foreground3);
+    border-radius: 12px;
+    
+
+    padding-left: max(10px, 1%);
+    padding-right: max(10px, 1%);
+    margin-bottom: 10px;
+}
+
+.FooterIContainer {
+    width: 100%;
+
+    background-color: var(--foreground3);
+    /* border-radius: 24px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+
+    /* Center copyright text */
+    text-align: center;
+
+    padding: 20px;
+    padding-bottom: 60px;
+}
+.FooterIContainer > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    gap: min(200px, 5dvw);
+}
+
+.footer-sec {
+    flex: 1 1 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-sec ul {
+    flex: 1 1 120px;
+    min-width: 150px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    text-align: center;
+
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+.footer-sec h1 {
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+}
+
+/* Hide li dot */
+.footer-sec li {
+    list-style-type: none;
+}
+
+/* Style buttons */
+.footer-sec a {
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--font-black);
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    cursor: pointer;
+}
+.footer-sec a:hover {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--font-black) !important;
+}

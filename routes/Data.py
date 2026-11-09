@@ -1,18 +1,18 @@
-# Image data requesting routes
-#
 from Scripts import utils
-from fastapi import Query
+from fastapi import Query, Request
+from Scripts.LibraryStats import LibraryStats
 
-@utils.fastAPI.get("/api/v1/data/metadata")
-def get_cache_data(
-    f: str = Query(..., title="The location of the file you want"),
-):
-    """Gets info on a file inside the library"""
-    ...
-
-@utils.fastAPI.get("/api/v1/data/caches")
-def get_cache_data(
-    f: str = Query(..., title="The location of the file you want"),
-):
-    """Get cache info about an image in the library such as number of caches, sizes, etc."""
-    ...
+@utils.fastAPI.get("/api/v1/data/library-file-counts")
+@utils.limiter.limit("120/minute")
+def get_file_counts(request: Request):
+    """Returns the total number of files, dirs, and images in the entire library"""
+    return {
+        "success": True,
+        "stats": {
+            "dirs": LibraryStats.getDirCount(),
+            "files": LibraryStats.getFileCount(),
+            "images": LibraryStats.getImgCount(),
+            "svgs": LibraryStats.getSvgCount(),
+        },
+        "last_updated": LibraryStats.last_updated.isoformat(),
+    }

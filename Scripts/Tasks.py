@@ -2,7 +2,6 @@ import asyncio, os
 #
 from pathlib import Path
 from datetime import datetime, timedelta, time
-from dataclasses import dataclass
 from Scripts.utils import Color
 from Scripts import utils
 from Scripts.ServerData import ServerData
@@ -74,34 +73,42 @@ class ClearCacheTask(ScheduledTask):
 
         try:
             keep_cache_for_hours = int(ServerData.getData("keep_cache_for_hours"))
-    
-            # Check all dirs inside the cache folder
-            for root, dirs, files in os.walk(ServerData.get_cache_path()):
-    
-                # Check files
-                for file in files:
-                    path = Path(root) / file
-
-                    # Delete the file if it isn't a supported image
-                    if not path.suffix.replace(".", "") in utils.supported_resize_image_extensions:
-                        path.unlink()
-                        continue
-
-                    # Delete if it is older than cache date
-                    if datetime.now() - path.stat().st_ctime > timedelta(hours=keep_cache_for_hours):
-                        path.unlink()
-
-                # Delete empty folders
-                for dir in dirs:
-                    path = Path(root) / dir
-                    if len(os.listdir(path)) == 0:
-                        path.rmdir()
+            await asyncio.to_thread(
+                self._clear_cache,
+                ServerData.get_cache_path(),
+                keep_cache_for_hours,
+            )
 
         except PermissionError:
             print(f"Failed to clear cache in {ServerData.get_cache_path()} due insufficient permissions to delete files in this folder.")
 
         except Exception as e:
             print(f"Failed to clear cache: {e}")
+
+    @staticmethod
+    def _clear_cache(cache_path: Path, keep_cache_for_hours: int):
+        # Loop over all files in the cache
+        for root, dirs, files in os.walk(cache_path, topdown=False):
+            for file in files:
+                path = Path(root) / file
+
+                # If the file is not a resizable image, delete it
+                if path.suffix.lstrip(".") not in utils.supported_resize_image_extensions:
+                    path.unlink()
+                    continue
+
+                # If the file is older than the keep_cache_for_hours, delete it
+                if (
+                    keep_cache_for_hours != -1 and
+                    datetime.now() - datetime.fromtimestamp(path.stat().st_mtime) > timedelta(hours=keep_cache_for_hours)
+                ):
+                    path.unlink()
+
+            # Delete empty directories
+            for directory in dirs:
+                path = Path(root) / directory
+                if path.is_dir() and not any(path.iterdir()):
+                    path.rmdir()
 
 
 
@@ -113,13 +120,8 @@ class PurgeCacheTask(ScheduledTask):
         print("Purging Cache...")
 
         try:
-            # Delete all files and folders in the cache folder
-            for root, dirs, files in os.walk(ServerData.get_cache_path(), topdown=False):
-                for file in files:
-                    (Path(root) / file).unlink()
-
-                for directory in dirs:
-                    (Path(root) / directory).rmdir()
+            await asyncio.to_thread(self._purge_cache, ServerData.get_cache_path())
+            print(f"{Color.g}Successfully purged cache.{Color.re}")
 
         
         except PermissionError:
@@ -127,3 +129,15 @@ class PurgeCacheTask(ScheduledTask):
 
         except Exception as e:
             print(f"{Color.r}Failed to purge cache: {e}{Color.re}")
+
+    @staticmethod
+    def _purge_cache(cache_path: Path):
+        # Loop over all files in the cache
+        for root, dirs, files in os.walk(cache_path, topdown=False):
+            # Delete all files first
+            for file in files:
+                (Path(root) / file).unlink()
+
+            # Delete all directories (which should be empty now)
+            for directory in dirs:
+                (Path(root) / directory).rmdir()

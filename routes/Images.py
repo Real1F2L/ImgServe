@@ -4,30 +4,28 @@ import mimetypes, io
 #
 from pathlib import Path
 from PIL import Image
-from fastapi import Query
+from fastapi import Query, Request
 from fastapi.responses import FileResponse, Response
 from fastapi.exceptions import HTTPException
 from Scripts import utils
 from Scripts.utils import Color
-from Scripts.ServerData import ServerData
+from Scripts.ServerData import ServerData, resolve_library_path
 
 @utils.fastAPI.get("/api/v1/get-img/download")
+@utils.limiter.limit("1200/minute")
 async def download_raw_img(
+    request: Request,
     f: str = Query(..., title="The location of the file you want"),
     ):
     """Returns a raw image"""
 
-    img_path = ServerData.get_library_path() / f
+    img_path = resolve_library_path(f)
 
-    # Prevent directory traversal
-    if not img_path.is_relative_to(ServerData.get_library_path()):
-        raise HTTPException(status_code=403, detail="Invalid path")
-
-    # Check if the image exists
+    # Exists
     if not img_path.is_file():
         raise HTTPException(status_code=404, detail="Image does not exist")
     
-    # Check if its a saorted image
+    # Check if its a supported image
     if not img_path.suffix.replace(".", "") in utils.supported_download_image_extensions:
         raise HTTPException(status_code=400, detail="Must be a supported image type")
 
@@ -35,19 +33,17 @@ async def download_raw_img(
     return FileResponse(img_path, media_type=media_type or "application/octet-stream")
 
 @utils.fastAPI.get("/api/v1/get-img/convert")
+@utils.limiter.limit("60/minute")
 async def convert_img(
+    request: Request,
     f: str = Query(..., title="The location of the file you want"),
     t: str = Query("webp", title="The file type of response (default webp)")
 ):
     """Converts a raw image to a new type"""
 
-    img_path = ServerData.get_library_path() / f
+    img_path = resolve_library_path(f)
 
-    # Prevent directory traversal
-    if not img_path.is_relative_to(ServerData.get_library_path()):
-        raise HTTPException(status_code=403, detail="Invalid path")
-
-    # Check if the image exists
+    # Exists
     if not img_path.is_file():
         raise HTTPException(status_code=404, detail="Image does not exist")
     
@@ -81,7 +77,9 @@ async def convert_img(
 
 
 @utils.fastAPI.get("/api/v1/get-img/resize")
+@utils.limiter.limit("60/minute")
 async def resize_img(
+    request: Request,
     f: str = Query(..., title="The location of the file you want"),
     w: int | None = Query(None, ge=1),
     h: int | None = Query(None, ge=1),
@@ -89,13 +87,9 @@ async def resize_img(
     ):
     """Resize and download an image"""
 
-    img_path = ServerData.get_library_path() / f
+    img_path = resolve_library_path(f)
 
-    # Prevent directory traversal
-    if not img_path.is_relative_to(ServerData.get_library_path()):
-        raise HTTPException(status_code=403, detail="Invalid path")
-
-    # Check if the image exists
+    # Exists
     if not img_path.is_file():
         raise HTTPException(status_code=404, detail="Image does not exist")
     
@@ -113,14 +107,20 @@ async def resize_img(
             raise HTTPException(status_code=400, detail="Must be a supported image type")
 
     # Keep the original image type
+    og_img_type = img_path.suffix.replace(".", "")
     if t == "keep":
-        t = img_path.suffix.replace(".", "")
+        t = og_img_type
 
-    #? Pillow doesn't support jpg
+    #? Pillow doesn't support "jpg"
     if t == "jpg":
         t = "jpeg"
-    
-    # Generate cache path
+
+    # Limit the maximum width and height to prevent resource exhaustion
+    if w and w > 10000:
+        raise HTTPException(status_code=400, detail="Width too large")
+    if h and h > 10000:
+        raise HTTPException(status_code=400, detail="Height too large")
+
     cache_path = (
         ServerData.get_cache_path()
         / img_path.parent.relative_to(ServerData.get_library_path())
@@ -157,10 +157,29 @@ async def resize_img(
 
         # Return original image if it is upscaling
         if scale == 1.0:
-            return FileResponse(
-                img_path,
-                media_type=f"image/{t}",
-            )
+
+            # Convert the image to the new type
+            if t != og_img_type:
+                output = io.BytesIO()
+
+                # Jpg doesn't support rgba
+                if t in ("jpg", "jpeg") and image.mode not in ("RGB", "L"):
+                    image = image.convert("RGB")
+
+                image.save(output, format=t)
+
+                output.seek(0)
+                return Response(
+                    content=output.getvalue(),
+                    media_type=f"image/{t}",
+                )
+
+            # Return oriiginal image
+            else:
+                return FileResponse(
+                    img_path,
+                    media_type=f"image/{og_img_type}",
+                )
 
         # Scale down both axis by that amount, maintains aspect ratio
         new_width = round(og_w * scale)

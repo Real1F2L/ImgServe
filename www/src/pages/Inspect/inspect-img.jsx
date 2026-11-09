@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
 
-import "./index.css"
+import "./inspect-img.css"
 
 import FileExplorer from '../../Components/FileExplorer/FileExplorer';
 
@@ -28,7 +28,7 @@ export default function InspectImg() {
         }  
 
         // Fetch image data
-        fetch("http://127.0.0.1:8080/api/v1/file-search?f=" + filePath, {
+        fetch("/api/v1/file-search?f=" + filePath, {
             method: "GET"
         })
         .then(res => {
@@ -54,13 +54,13 @@ export default function InspectImg() {
 
             // Change the image url to a regular download (for non-resizeable images)
             else {
-                setImgURL(`http://127.0.0.1:8080/api/v1/get-img/download?f=${filePath}`);
+                setImgURL(`/api/v1/get-img/download?f=${filePath}`);
             }
         });
 
         const loadImage = async () => {
             // Fetch the image
-            const res = await fetch(`http://127.0.0.1:8080/api/v1/get-img/download?f=${filePath}`);
+            const res = await fetch(`/api/v1/get-img/download?f=${filePath}`);
 
             // Blob the image
             const blob = await res.blob();
@@ -168,7 +168,7 @@ export default function InspectImg() {
 
     return (
         <>
-            <section id='hero'>
+            <section id='inspect-hero'>
                 <div className='ImgContainer'>
                     <div className='ImgEditor'>
                         <img alt={imgJSON?.name} title={imgJSON?.name} src={ImgURL} loading='lazy'></img>

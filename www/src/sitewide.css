@@ -103,6 +103,7 @@ main {
     
 
     overflow-x: hidden;
+    overflow-y: hidden;
     scroll-behavior: smooth;
 }
 
@@ -192,7 +193,10 @@ span {
     font-family: inherit;
 }
 
-
+.emoji {
+    transform: translateY(5px);
+    height: 1.3rem;
+}
 
 /* text alignment */
 .l {

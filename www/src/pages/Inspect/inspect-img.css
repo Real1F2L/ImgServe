@@ -16,7 +16,7 @@ main > section {
     padding-top: 70px;
 }
 
-#hero {
+#inspect-hero {
     min-height: 600px;
 
     background-color: var(--foreground3);

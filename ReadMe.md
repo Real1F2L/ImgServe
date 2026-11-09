@@ -1,118 +1,78 @@
 # ImgServe
-**Thank you for checking out ImgServe!**
 
-The goal is to revolutionize how we serve images online to save time and data.
+ ImgServe is an image library API built for developers. Allowing you to request any size or type of file on demand, caching generated results for faster repeat access, and providing a simple web UI for quick access to your images.
 
-ImgServe is a free and open source image serving API that can Cache, Resize, and Reformat images on the fly!
+ It is designed for self-hosting and works well as a simple image backend for websites and apps that require grabbing images from the internet. ImgServe has proven to increase web performance and page build times, scoring higher on Cloudflare and Chrome evaluations than pages without ImgServe.
 
-## Features
-- Efficiently resize and request images
-- Use any image format
-- Store edited images for future use
- 
-## Examples of Resizing
-![Image 3 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=64x64&t=webp)
-![Image 3 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=128x128&t=webp)
-![Image 3 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/3.png&s=256x256&t=webp)
+ ## Features
+ - Create a publicly available image Library
+ - Store many types of images: SVG, PNG, JPG, WEBP, BMP
+ - Browse files and directories in the web UI
+ - Resize images at any time
+ - Convert images to compressed, request efficient formats
+ - Download raw files directly from the library
+ - Cache resized output for resource optimization
+ - Self-host in Docker
 
-![Image 2 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=64x64&t=webp)
-![Image 2 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=128x128&t=webp)
-![Image 2 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/2.png&s=256x256&t=webp)
+ ## Setting Up The Container with Docker Compose
 
-![Image 1 of Chopper 64x64](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=64x64&t=webp)
-![Image 1 of Chopper 128x128](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=128x128&t=webp)
-![Image 1 of Chopper 256x256](https://imgserve.gegeha.com/image/resize/?f=images/index/chopper/1.png&s=256x256&t=webp)
-
-#### All of these images are from the same file, resized to whatever I like it to be!
-
-## Table of How-To-Install 
-- [Installation](#installation)
-  - [Installation on Linux](#installation-on-linux)
-  - [Installation In Docker](#installation-in-docker)
-    - [Using Docker Compose](#using-docker-compose)
-    - [Using Docker Command](#using-docker-command)
-  - [Usage](#usage)
-  - [Contact](#contact)
-
-# Installation
-
-### Installation on Linux
-
-1. Clone the repository:
-  ```bash
-  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
-  cd ImgServe
-  ```
-2. Create a new virtual environment (optional):
+ 1. Clone the repository
  ```bash
- python -m venv .venv
- ```
-3. Install packages:
- ```bash
- python -m pip install -r requirements.txt
- ```
-4. Edit config.json to fit your setup
-5. Run main.py
-  ```bash
-  python main.py
-  ```
+ git clone https://github.com/Real1F2L/ImgServe.git ImgServe
 
-## Installation In Docker
-
-### Using Docker Compose
-
-1. Clone the repository:
-  ```bash
-  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
-  cd ImgServe
-  ```
-3. Edit docker-compose.yml to fit your setup
-4. Edit config.json to fit your setup
-5. Create the container:
- ```Bash
- docker-compose up -d
+ cd ImgServe
  ```
 
-### Using Docker Command
-
-1. Clone the repository:
-  ```bash
-  git clone https://github.com/Real1F2L/ImgServe.git ImgServe
-  cd ImgServe
-  ```
-
-2. Edit config.json to fit your setup
-
-3. Create a new image using the DockerFile and start the container:
+ 2. Clone the example config if you have not already:
 
  ```bash
- docker build -t imgserve:1.1.0 . && \
- docker run -d \ 
-   --name imgserve \
-   --restart unless-stopped \
-   -p 8080:80 \
-   -v ./:/ImgServe \
-   -v /path/to/folder-you-want-to-share/:/ImgServe/Files/ \
-   imgserve:1.1.0
+ cp Options.yml.example Options.yml
  ```
- 
-## Usage
-1. Install latest version of [Python](https://www.python.org/downloads/)
-2. Follow the instructions at [Installation](#Installation)
-3. ImgServe is an API that is entirely operated by URL query
-  - For example: `[Your IP Address]:[Your Port]/image/resize?f=image.webp&s=128x128&t=png` will return image.webp resized to 128x128 as a png
-    
-  - There are multiple subdirectories with different queries you can use:
-     - `/image/resize` Returns a resized version of a image
-       - `f` The file location of the image
-       - `s` The image size of the response (in the format 120x120)
-       - `t` The file type of the response
-       - `ar` Maintain aspect ratio (defaults to yes, setting this to anything but "y" makes it no)
-     - `/image/download` Returns a raw image
-       - `f` The file location of the image
-     - And more to come...
 
-## Contact
-- Business Email: [business@gegeha.com](mailto:business@gegeha.com)
-- Discord: [1f2l](https://discord.com/users/686579767813734412)
-- [Discord Server](https://discord.com/invite/RHt7wvmfEp)
+ 3. Start the app with Docker Compose:
+
+ ```bash
+docker compose up -d --build
+ ```
+
+ `docker-compose.yml` is included in the project files.
+
+ ImgServe, by default, runs on port 8080. Proxypass it through your webserver or portforward it (not recommended) to make your images available on the internet.
+
+ ## API usage
+
+ The app exposes REST endpoints under `/api/v1/`.
+
+### Routes:
+- `/api/v1/get-img/download` - download a raw image file from the library
+  - `f`: relative path to the image to download
+
+- `/api/v1/get-img/convert` - convert an image to a different supported format
+  - `f`: relative path to the image
+  - `t`: output type (`png`, `jpg`, `webp`, `bmp`)
+
+- `/api/v1/get-img/resize` - resize and optionally convert an image
+  - `f`: path to the image relative to the library root
+  - `w`: target width in pixels
+  - `h`: target height in pixels
+  - `t`: output type (`png`, `jpeg`, `jpg`, `webp`, `bmp`, or `keep`)
+  - You can provide width or height. If both are provided the larger is used. Aspect ratio is always maintained.
+
+- `/api/v1/folder-search` — list all files and folders inside a library directory
+  - `f`: relative path, cannot be a file
+
+- `/api/v1/file-search` — get data on a specific file
+  - `f`: relative path to file
+
+- `/api/v1/data/library-file-counts` - get statistics on files in the library
+  - No parameters required
+  - Statistics update periodically as per config
+
+ ## Notes
+
+ - Image metadata such as location may be served through this API, ensure you know what your putting online
+ - ImgServe does **NOT** automatically make your images public to the internet, the ImgServe port must be proxypassed or portforwarded to be available. ImgServe **DOES** make your images available to the local network.
+
+ ## Contact
+ - Business Email: [business@gegeha.com](mailto:business@gegeha.com)
+ - Discord: [1f2l](https://discord.com/users/686579767813734412)

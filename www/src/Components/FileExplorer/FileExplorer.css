@@ -23,6 +23,15 @@
 }
 #ExplorerTable td:nth-child(2) {
     text-align: left;
+
+    /* Space out each row */
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.emptymsg {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 #FileExplorer {
@@ -38,11 +47,31 @@
     margin-bottom: 30px;
 }
 
-#FileExplorer #currentDir {
+/* Container for directory name text */
+.DirContainer {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+
+    cursor: pointer;
+}
+.DirContainer > img {
+    position: relative;
+    top: -8px; /* Center visually*/
+    max-width: 30px;
+
+    margin-left: 40px;
+}
+
+/* The current directory text */
+#currentDir {
     height: 60px;
     
     align-self: flex-start;
-    margin-left: 2dvw;
+    margin-left: 10px;
 
     font-size: 2rem;
 }
@@ -56,7 +85,7 @@
 
     margin-inline: auto;
 
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Folder.svg");
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Folder.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -69,45 +98,69 @@
 
     margin-inline: auto;
 
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/File2.svg");
-    background-size: contain;
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/File.svg");
     background-position: center;
     background-repeat: no-repeat;
 
-    transform: scale(1.4);
+    background-size: 50px;
+    filter: invert(1);
 }
 .Image > td:nth-child(1)::after{
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Image.svg");
+    content: "";
+    display: block;
+    width: 40px;
+    aspect-ratio: 1 / 1;
+
+    margin-inline: auto;
+
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Image.svg");
     transform: scale(1);
+    background-size: contain;
+    filter: none;
 }
 
 /* Icons */
 .True {
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Check.svg");
-    background-size: contain;
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Check.svg");
     background-position: center;
     background-repeat: no-repeat;
+    
+    /* Size of check */
+    background-size: 30px;
 }
 .False,
 .Empty {
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Dot.svg");
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Dot.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
     opacity: .05;
 }
+
+
 .copy {
     width: 30px;
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Copy.svg");
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Copy.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
 .download {
     width: 30px;
-    background-image: url("http://127.0.0.1:8080/api/v1/get-img/download?f=ImgServe%20Web%20UI/Download.svg");
+    background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Download.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+
+html.dark .Folder > td:nth-child(1)::after {
+    filter: invert(1);
+}
+html.dark .File > td:nth-child(1)::after {
+    filter: invert(0); /* Remove invert */
+}
+html.dark :is(.copy, .download, .True, .back) {
+    filter: invert(1);
 }

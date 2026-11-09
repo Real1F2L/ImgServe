@@ -1,0 +1,36 @@
+MAJOR Used AI to find issues, added footer, icons, statistics, and styling changes
+
+Project changes:
+    - Updated readme.md to make sense with the current project
+    - Created a docker-compose.yml
+
+Font-end changes:
+    - Copied Gegeha.com footer and adjusted to fit ImgServe
+    - Centered Home hero icon visually
+    - Added back icon to currentDir
+    - Added padding to File Explorer rows
+    - Created and added Gegeha icon in SVG format
+    - Displayed library file statistics on home page
+    - Fixed backend calls routing to localhost, added proxy to vite
+    - Icons invert color in dark mode
+   
+Back-end changes:
+    - Added classes and routes for library file statistics that update periodically
+    - Removed unfinished routes
+    - Added ratelimiting
+
+AI review changes (AI is used to search for vulernabilities and issues missed by humans that effect the compatability of ImgServe across devices. Code is updated manually by real humans. We do not encourage or condone the use of mass AI generation in our projects):
+    - Dockerfile now starts the correct __main__.py file
+    - Updated default settings in ServerData.py to match updated Options.yml
+    - Fixed MAJOR security issue where directory traversal was still possible
+    - Limited maximum resize sizes to prevent resource exhaustion
+    - Fixed an issue where scheduled tasks ran once and exited
+    - Periodic cache clearing no longer uses hard-coded value
+    - Made file reading and writing operations asynconous as needed to prevent pausing the event loop
+    - Fixed cache age calculation operation error
+    - Upscaled images now covert to the requested file type instead of returning the original type
+    - Cleaned up gitignore and requirements.txt
+    
+
+Known issues:
+    - Image metadata such as location can be served publicly
