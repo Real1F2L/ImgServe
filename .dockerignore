@@ -1,0 +1,13 @@
+.git
+.gitignore
+.dockerignore
+Options.yml
+Cache/
+Library/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+www/node_modules/
+www/dist/
+www/.vite/

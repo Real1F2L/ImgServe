@@ -1,5 +1,7 @@
 import os, uvicorn, asyncio
 #
+from PIL import Image
+from io import BytesIO
 from contextlib import asynccontextmanager
 from pathlib import Path
 from datetime import datetime
@@ -26,7 +28,7 @@ ise : HTTPException = HTTPException(status_code=500, detail="Internal Server Err
 # Slowapi rate limiter
 limiter = Limiter(key_func=get_remote_address)
 
-def startFastAPI(host:str = "0.0.0.0", port:int=8080, origins:list = []) -> None:
+def startFastAPI(origins:list = []) -> None:
     # Add middleware
     fastAPI.add_middleware(
         CORSMiddleware,
@@ -39,8 +41,8 @@ def startFastAPI(host:str = "0.0.0.0", port:int=8080, origins:list = []) -> None
     # Run
     uvicorn.run(
         fastAPI,
-        host=host,
-        port=port,
+        host="0.0.0.0",
+        port=8081, # Backend runs on 8081, nginx is on 8080
         log_level="error",
         proxy_headers=True,
         forwarded_allow_ips="127.0.0.1",
@@ -135,3 +137,28 @@ def getIP(request:Request) -> str:
 def getCurrentTime() -> str:
     """ Returns: current time in format 'h:min:sec AM/PM, month/day/year'"""
     return datetime.now().strftime("%I:%M:%S %p, %m/%d/%Y")
+
+def strip_image_metadata(path: Path) -> bytes:
+    """
+    Strip metadata from an image and return the image as bytes
+    """
+    if path.suffix.lower() == ".svg":
+        return path.read_bytes()
+
+    extension = path.suffix.lstrip(".").lower()
+    if extension not in supported_download_image_extensions:
+        raise ValueError(f"Unsupported downloadable image format: {extension}")
+
+    with Image.open(path) as image:
+        clean_image = Image.new(image.mode, image.size)
+        clean_image.putdata(list(image.getdata()))
+
+        image_format = image.format
+
+        if image_format == "JPEG" and clean_image.mode not in ("RGB", "L"):
+            clean_image = clean_image.convert("RGB")
+
+        output = BytesIO()
+        clean_image.save(output, format=image_format)
+
+        return output.getvalue()

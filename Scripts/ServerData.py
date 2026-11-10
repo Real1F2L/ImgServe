@@ -10,8 +10,6 @@ from fastapi import HTTPException
 _defaults: dict = {
     "server_url": "missing_server_url_value",
 
-    "host": "0.0.0.0",
-    "port": 8080,
     "CORS_origins": [
         "http://localhost",
         "http://127.0.0.1"

@@ -80,4 +80,4 @@ if __name__ == "__main__":
 
     # Start FastAPI
     print(f"\n\n{Color.y}Starting FastAPI...\n{Color.re}")
-    utils.startFastAPI(host=ServerData.getData("host"), port=ServerData.getData("port"), origins=ServerData.getData("CORS_origins"))
+    utils.startFastAPI(origins=ServerData.getData("CORS_origins"))

@@ -1,94 +1,41 @@
-# Temporary Files
-tmp/
-var/
-*.tmp
-*.bak
-*.log
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Build Output
-build/
-.builds
-[Bb]in/
-[Oo]bj/
-[Dd]ebug/
-[Rr]elease/
-
-# IDE / Editor
-.vs/
-*.suo
-*.user
-*.sln.docstates
-.idea/
-.vscode
-
-# Generated Files
-*.obj
-*.tmp_proj
-
-# Operating System
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# Archives
-*.zip
-*.7z
-*.rar
-*.tar
-*.gz
-
-# Environment
+# Environment / secrets
+.env
 Options.yml
 !Options.yml.example
-.env
 
-# Logs
-logs/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Caches
-.cache/
-.cache-loader/
-temp/
-
-# python
-.venv/
-__pycache__/
-
-# Project specific
-tests/
-pfp/
-git-commit.txt
+# Project runtime data
 Cache/
 Library/
 
+# Frontend build artifacts
+www/node_modules/
+www/dist/
+www/dist-ssr/
+www/.vite/
 
-# From vite
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Editor / OS
+.vscode/
+.idea/
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+

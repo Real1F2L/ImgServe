@@ -8,7 +8,7 @@ from fastapi import Query, Request
 from fastapi.responses import FileResponse, Response
 from fastapi.exceptions import HTTPException
 from Scripts import utils
-from Scripts.utils import Color
+from Scripts.utils import Color, strip_image_metadata
 from Scripts.ServerData import ServerData, resolve_library_path
 
 @utils.fastAPI.get("/api/v1/get-img/download")
@@ -23,14 +23,19 @@ async def download_raw_img(
 
     # Exists
     if not img_path.is_file():
-        raise HTTPException(status_code=404, detail="Image does not exist")
+        raise HTTPException(status_code=404, detail="Image could not be found")
     
     # Check if its a supported image
     if not img_path.suffix.replace(".", "") in utils.supported_download_image_extensions:
         raise HTTPException(status_code=400, detail="Must be a supported image type")
 
     media_type, _ = mimetypes.guess_type(img_path)
-    return FileResponse(img_path, media_type=media_type or "application/octet-stream")
+
+    return Response(
+        content=strip_image_metadata(img_path),
+        media_type=media_type
+    )
+
 
 @utils.fastAPI.get("/api/v1/get-img/convert")
 @utils.limiter.limit("60/minute")
@@ -58,6 +63,13 @@ async def convert_img(
     #? Pillow doesn't support jpg
     if t == "jpg":
         t = "jpeg"
+
+    # if it's already the same type
+    if img_path.suffix.replace(".", "") == t:
+        return Response(
+            content=strip_image_metadata(img_path),
+            media_type=f"image/{t}",
+        )
 
     # Open image
     with Image.open(img_path) as image:
@@ -176,8 +188,8 @@ async def resize_img(
 
             # Return oriiginal image
             else:
-                return FileResponse(
-                    img_path,
+                return Response(
+                    strip_image_metadata(img_path),
                     media_type=f"image/{og_img_type}",
                 )
 
