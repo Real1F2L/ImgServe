@@ -2,12 +2,42 @@
 
 import os
 #
+from pathlib import Path
 from fastapi import HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
 from Scripts.ServerData import ServerData, resolve_library_path
 from Scripts import utils
 from fastapi import Query
 from PIL import Image
+
+
+def get_file_name_and_extension(path: Path) -> tuple[str, str]:
+    extension = path.suffix.lstrip(".")
+    name = path.stem if extension else path.name
+    return name, extension
+
+
+@utils.fastAPI.get("/api/v1/file-download")
+@utils.limiter.limit("1200/minute")
+def download_file(
+    request: Request,
+    f: str = Query(..., title="The location of the file you want"),
+):
+    """Download a regular file from the library
+
+    This is strictly for files, not images!
+    """
+
+    path = resolve_library_path(f)
+    if not path.is_file():
+        raise HTTPException(status_code=404, detail="File could not be found")
+    if path.suffix.lstrip(".").lower() in utils.supported_download_image_extensions:
+        raise HTTPException(
+            status_code=400,
+            detail="Image files must be downloaded through the image download endpoint",
+        )
+
+    return FileResponse(path, filename=path.name)
 
 
 @utils.fastAPI.get("/api/v1/folder-search")
@@ -40,8 +70,7 @@ def file_search(
 
         # Files
         elif entry.is_file():
-            extension = entry.name.split(".")[-1]
-            name = entry.name.replace("." + extension, "")
+            name, extension = get_file_name_and_extension(Path(entry.name))
             is_resizable_image = extension in utils.supported_resize_image_extensions
             is_image = extension in utils.supported_download_image_extensions
             is_video = extension in utils.supported_video_extentions
@@ -77,8 +106,7 @@ def file_search(
     if not path.is_file():
         raise HTTPException(status_code=400, detail="Path does not exist or is not a file")
 
-    extension = path.name.split(".")[-1]
-    name = path.name.replace("." + extension, "")
+    name, extension = get_file_name_and_extension(path)
     is_resizable_image = extension in utils.supported_resize_image_extensions
     is_image = extension in utils.supported_download_image_extensions
     is_video = extension in utils.supported_video_extentions

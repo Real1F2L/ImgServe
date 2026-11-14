@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import "./FileExplorer.css"
 
@@ -7,7 +7,11 @@ export default function FileExplorer() {
   const [files, setFiles] = useState([]);
   const [dirs, setDirs] = useState([]);
   const [loading, setloading] = useState(true);
+  const [copiedFilePath, setCopiedFilePath] = useState(null);
+  const copyPopupTimeout = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => () => window.clearTimeout(copyPopupTimeout.current), []);
   
   // Grab current dir from url
   const windowdir = decodeURI(window.location.pathname).split("/").splice(1);
@@ -124,18 +128,22 @@ export default function FileExplorer() {
 
           {files.map((file, i) => {
             const is_image = Boolean(file.is_image);
+            const fileName = file.extension ? `${file.name}.${file.extension}` : file.name;
+            const filePath = [currentDir, fileName].filter(Boolean).join("/");
+            const downloadEndpoint = is_image ? "/api/v1/get-img/download" : "/api/v1/file-download";
+            const downloadUrl = `${downloadEndpoint}?${new URLSearchParams({ f: filePath })}`;
             return (
               <tr key={i} className={`${file.is_image ? 'Image clickable' : 'File'}`}
                 tabIndex={0}
                 onClick={() => {
                   if (file.is_image) {
-                    navigate(`/inspect/${currentDir}/${file.name}.${file.extension}`);
+                    navigate(`/inspect/${filePath}`);
                   }
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
                     if (file.is_image) {
-                      navigate(`/inspect/${currentDir}/${file.name}.${file.extension}`);
+                      navigate(`/inspect/${filePath}`);
                     }
                   }
                 }}
@@ -148,8 +156,38 @@ export default function FileExplorer() {
                 <td className={file.is_video ? 'True' : 'False'}></td>
                 <td>{getCleanTimeString(file.last_modified)}</td>
                 <td>{formatFileSize(file.size_bytes)}</td>
-                <td className='copy clickable' title='Copy to Clipboard'></td>
-                <td className='download clickable' title='Download File'></td>
+                <td className='copy-cell'>
+                  <button
+                    className='file-action copy'
+                    type='button'
+                    title='Copy download link'
+                    aria-label={`Copy download link for ${fileName}`}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      try {
+                        await navigator.clipboard.writeText(new URL(downloadUrl, window.location.origin).href);
+                        setCopiedFilePath(filePath);
+                        window.clearTimeout(copyPopupTimeout.current);
+                        copyPopupTimeout.current = window.setTimeout(() => setCopiedFilePath(null), 1200);
+                      } catch (error) {
+                        console.error("Could not copy the download link:", error);
+                      }
+                    }}
+                  />
+                  {copiedFilePath === filePath && <span className='copy-popup' role='status'>Copied!</span>}
+                </td>
+                <td>
+                  <a
+                    className='file-action download'
+                    href={downloadUrl}
+                    download={fileName}
+                    title='Download File'
+                    aria-label={`Download ${fileName}`}
+                    onKeyDown={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </td>
               </tr>
             )
           })

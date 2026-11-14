@@ -28,6 +28,8 @@ main > section {
 
 /* Contains image and options */
 .ImgContainer {
+    max-height: 70dvh;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -36,54 +38,160 @@ main > section {
     gap: max(30px, 2%);
 }
 
+.ImageResizeControls {
+    width: min(100%, 1032px);
+    height: min(70dvh, 640px);
+    min-height: 220px;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 24px;
+    grid-template-rows: minmax(0, 1fr) 36px;
+    gap: 8px;
+    align-items: center;
+}
+
 .ImgEditor {
-    flex: 1 0 400px;
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    max-height: 600px;
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* Sliders */
+.ImageResizeControls input[type="range"] {
+    margin: 0;
+    accent-color: var(--blue-accent);
+    cursor: pointer;
+
+    border: none;
+}
+.ImageResizeControls input[type="range"]:focus-visible {
+    outline: 2px solid var(--blue-accent-light);
+    outline-offset: 3px;
+}
+.ImageResizeControls input[type="range"]:disabled {
+    cursor: not-allowed;
+}
+
+.ImageWidthSlider {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+}
+.ImageHeightSlider {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    height: 100%;
+    width: 24px;
+    writing-mode: vertical-lr;
+    direction: rtl;
+}
+
+.ImgEditor img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    /* Display is none via js */
+}
+
+/* Loading icon that shows when the image hasnt appeared yet */
+#loadingIcon {
+    text-align: center;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 20px;
 
-    background-color: var(--foreground-accent);
-    border: solid 1px var(--blue-accent-light);
-    border-radius: 24px;
-
-    padding: max(4px, 1%);
-
-    box-shadow: -10px 10px 10px rgba(0, 0, 0, 0.5);
-}
-.ImgEditor img {
-    width: 100%;
-    max-width: 800px;
-    max-height: 80dvh;
-    border-radius: calc(24px - max(4px, 1%)); /* border - container padding */
+    /* Display is none via js */
 }
 
 /* Image options container */
 .ImgOptions {
-    flex: 1 0;
+    width: 100%;
+    max-width: 300px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 
     background-color: var(--foreground-accent);
     border: solid 1px var(--blue-accent-light);
     border-radius: 6px;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
 
-    padding: max(10px, 2%);
+    padding: max(10px, 1%);
 }
 
+.ImgOptions-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ImgOptions-section :is(button, option, select) {
+    color: black;
+}
 
-/* Size options */
+/* File format options */
+.FormatOption {
+    flex-direction: row;
+    gap: 20px;
+}
+.FormatOption select {
+    width: auto;
+    max-width: 150px;
+
+    font-size: 1rem;
+
+    border: none;
+}
+
+.ImgActions {
+    gap: 10px;
+}
+
+.InspectCopyControl {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+/* Image size options */
 .SizeOption {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
 
 }
 .SizeOption > div {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 20px;
+
+    margin-bottom: 10px;
+}
+.SizeNumContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* The x between sizes */
@@ -104,27 +212,9 @@ main > section {
     -moz-appearance: textfield;
     appearance: textfield;
 }
-/* Hide arrows on chomre */
+/* Hide arrows on chrome */
 .SizeOption input[type="number"]::-webkit-inner-spin-button,
 .SizeOption input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-
-.SizeOption button {
-    color: black;
-}
-
-.FormatOption select,
-.FormatOption option {
-    max-width: 50px;
-    color: black;
-}
-
-.SizeNumContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }

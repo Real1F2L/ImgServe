@@ -1,12 +1,17 @@
-MAJOR Project is functional in docker + metadata removal
 
-Changes:
-    - Frontend compiled on build
-    - Frontend and Backend available on one webserver
-    - Backend moved to port 8081 on /api/
-    - Nignx runs on port 8080
-    - Added dockerignore
-    - Nginx site configuration
-    - Added supervisord to run nginx and backend at the same time
+Frontend changes:
+    - Added sliders for resizing images
+    - Added debounce time to resizing images to save resources
+    - Fixed styling of inspect page
+    - Fixed SVG loading state so non-resizable images leave the loading screen
+    - Added loading spinner
+    - Added popup when copying urls
+    - Added BMP and original format options to inspect downloads
+    - Added drop shadows
 
-    - Metadata on served images is removed for privacy
+Backend changes:
+    - Added file download route for non-image files only
+    - Fixed filenames and extensions for extensionless files
+
+Front and backend changes:
+    - Changed vite proxy port to 8081

@@ -41,6 +41,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
 }
 
 #FileExplorer p {
@@ -138,13 +140,44 @@
     opacity: .05;
 }
 
-
-.copy {
+.file-action {
+    display: block;
     width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+.copy {
     background-image: url("/api/v1/get-img/download?f=ImgServe%20Web%20UI/Copy.svg");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+.copy-cell {
+    position: relative;
+}
+.copy-popup {
+    position: absolute;
+
+    left: 50%;
+    bottom: calc(100% - 4px);
+    transform: translateX(-50%);
+
+    border: 1px solid var(--blue-accent-light);
+    border-radius: 5px;
+    background-color: var(--foreground-accent);
+    
+    padding: 3px 8px;
+    
+    color: var(--font-black);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    
+    pointer-events: none;
+    z-index: 1;
 }
 .download {
     width: 30px;
