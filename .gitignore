@@ -39,3 +39,5 @@ logs/
 *.bak
 *.swp
 
+# project
+git-commit.txt
